@@ -106,6 +106,7 @@ public class Selector {
                     }
                 }
             }
+            matches = listOfMatches.size();
         }
     }
 

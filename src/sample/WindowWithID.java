@@ -2,12 +2,15 @@ package sample;
 
 import org.jfree.ui.tabbedui.VerticalLayout;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class WindowWithID extends JFrame {
 
@@ -26,6 +29,108 @@ public class WindowWithID extends JFrame {
         labelText.setHorizontalAlignment(JLabel.CENTER);
         labelText.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         add(labelText);
+
+        Font fontText = new Font("Arial", Font.BOLD, 25);
+        Font fontTezis = new Font("Arial", Font.BOLD, 20);
+
+        JPanel panelResources = new JPanel(new VerticalLayout());
+        panelResources.setBorder(BorderFactory.createEmptyBorder( 0, 20, 0, 20));
+
+        JPanel vkPanel = new JPanel(new BorderLayout());
+        File fileVK = new File("images/vk.png");
+        BufferedImage bimg = null;
+        try {
+            bimg = ImageIO.read(fileVK);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Image scaled = bimg.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        JLabel vkImage = new JLabel(new ImageIcon(scaled));
+        vkPanel.add(vkImage, BorderLayout.WEST);
+        String vk = "<html> (<a href=\"vk.com/id493869084\">Написать ВКонтакте</a>) </html>";
+
+        JLabel vkLabel = new JLabel(vk);
+        vkLabel.setFont(fontTezis);
+        vkLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Desktop desktop = java.awt.Desktop.getDesktop();
+                URI uri = null;
+                try {
+                    uri = new URI("https://vk.com/id493869084");
+                } catch (URISyntaxException e1) {
+                    e1.printStackTrace();
+                }
+                try {
+                    desktop.browse(uri);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        vkPanel.add(vkLabel);
+        panelResources.add(vkPanel);
+
+        JPanel telegramPanel = new JPanel(new BorderLayout());
+        File fileTelegram = new File("images/telegram.png");
+        bimg = null;
+        try {
+            bimg = ImageIO.read(fileTelegram);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        scaled = bimg.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        JLabel telegramImage = new JLabel(new ImageIcon(scaled));
+        telegramPanel.add(telegramImage, BorderLayout.WEST);
+        String telegram = "<html> (<a href=\"https://tlgg.ru/mgomorov\">Написать в Telegram</a>) </html>";
+
+        JLabel telegramLabel = new JLabel(telegram);
+        telegramLabel.setFont(fontTezis);
+        telegramLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Desktop desktop = java.awt.Desktop.getDesktop();
+                URI uri = null;
+                try {
+                    uri = new URI("https://tlgg.ru/mgomorov");
+                } catch (URISyntaxException e1) {
+                    e1.printStackTrace();
+                }
+                try {
+                    desktop.browse(uri);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        telegramPanel.add(telegramLabel);
+        panelResources.add(telegramPanel);
+
+        panel.add(panelResources);
 
         JLabel label = new JLabel("Ваш ID в программе HockeyBettingHelper:");
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,14 +204,10 @@ public class WindowWithID extends JFrame {
                 window.add(label);
 
                 JTextArea jtf = new JTextArea(
-                        "Контакты:\n" +
-                                "ВК: vk.com/id493869084\n" +
-                                "Telegram | WhatsApp: 8-916-477-81-33\n" +
-                                "\n" +
-                                "Реквизиты для оплаты:\n" +
-                                "1) Сбербанк: 4817 7600 0971 7228 (Михаил Романович Г.)\n" +
-                                "2) Яндекс.Деньги: 410017025122373\n" +
-                                "3) Киви: 8-916-477-81-33"
+                    "Реквизиты для оплаты:\n" +
+                    "1) Сбербанк: 4817 7600 1667 8447 (Михаил Романович Г.)\n" +
+                    "2) Яндекс.Деньги: 410017025122373\n" +
+                    "3) Киви: 8-916-477-81-33"
                 );
                 jtf.setBackground(new Color(238, 238, 238));
                 jtf.setFont(font);
@@ -117,5 +218,7 @@ public class WindowWithID extends JFrame {
                 window.pack();
             }
         });
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

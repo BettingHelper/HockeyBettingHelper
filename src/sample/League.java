@@ -191,13 +191,13 @@ public class League {
             awaySelector.getPList(awaySelector.listOfMatches, teamName, season);
             double awayMatches = awaySelector.listOfMatches.size();
 
-            double real_Overall     = Team.roundResult(100 * (Double.parseDouble(totalSelector.pList.get(5).get(1)) / matchesTotal / Double.parseDouble(totalSelector.pList.get(7).get(1))) , 2);
-            double real_Overall_Opp = Team.roundResult(100 * (Double.parseDouble(totalSelector.pList.get(5).get(2)) / matchesTotal / Double.parseDouble(totalSelector.pList.get(7).get(2))) , 2);
+            double real_Overall     = Team.roundResult(100 * (Double.parseDouble(totalSelector.pList.get(9).get(1)) / Double.parseDouble(totalSelector.pList.get(8).get(1))) , 2);
+            double real_Overall_Opp = Team.roundResult(100 * (Double.parseDouble(totalSelector.pList.get(9).get(2)) / Double.parseDouble(totalSelector.pList.get(8).get(2))) , 2);
 
-            double realHT     = Team.roundResult(100 * (Double.parseDouble(homeSelector.pList.get(5).get(1)) / homeMatches / Double.parseDouble(homeSelector.pList.get(7).get(1))) , 2);
-            double realHT_Opp = Team.roundResult(100 * (Double.parseDouble(homeSelector.pList.get(5).get(2)) / homeMatches / Double.parseDouble(homeSelector.pList.get(7).get(2))) , 2);
-            double realAT     = Team.roundResult(100 * (Double.parseDouble(awaySelector.pList.get(5).get(1)) / awayMatches / Double.parseDouble(awaySelector.pList.get(7).get(1))) , 2);
-            double realAT_Opp = Team.roundResult(100 * (Double.parseDouble(awaySelector.pList.get(5).get(2)) / awayMatches / Double.parseDouble(awaySelector.pList.get(7).get(2))) , 2);
+            double realHT     = Team.roundResult(100 * (Double.parseDouble(homeSelector.pList.get(9).get(1)) / Double.parseDouble(homeSelector.pList.get(8).get(1))) , 2);
+            double realHT_Opp = Team.roundResult(100 * (Double.parseDouble(homeSelector.pList.get(9).get(2)) / Double.parseDouble(homeSelector.pList.get(8).get(2))) , 2);
+            double realAT     = Team.roundResult(100 * (Double.parseDouble(awaySelector.pList.get(9).get(1)) / Double.parseDouble(awaySelector.pList.get(8).get(1))) , 2);
+            double realAT_Opp = Team.roundResult(100 * (Double.parseDouble(awaySelector.pList.get(9).get(2)) / Double.parseDouble(awaySelector.pList.get(8).get(2))) , 2);
 
             String recordTotal = teamName + "*" + (int) matchesTotal + "*"
                     + MyMath.round(Double.parseDouble(totalSelector.pList.get(5).get(1)), 2) + "_"

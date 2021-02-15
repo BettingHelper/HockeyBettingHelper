@@ -255,24 +255,24 @@ public class Settings {
 
     public static String getSerialNumber() throws Exception{
         String line;
-        String serial = "";
+        StringBuilder serial = new StringBuilder("H");
         Process process = Runtime.getRuntime().exec("cmd /c wmic path Win32_PhysicalMedia where \"tag like '%Drive0%'\" Get SerialNumber");
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(process.getInputStream()) );
         while ((line = in.readLine()) != null) {
             if ((!line.contains("erial"))&&(!line.equals("")))
-                serial = serial + line;
+                serial.append(line);
         }
         in.close();
-        serial = serial.replaceAll("\\s","");
-        if (serial.toUpperCase().contains("ERROR")){
+        serial = new StringBuilder(serial.toString().replaceAll("\\s", ""));
+        if (serial.toString().toUpperCase().contains("ERROR")){
             PopupWindow window = new PopupWindow("<html>   Ошибка при проверке ID. Код ошибки 1<br>" +
                     "Обратитесь к администратору." + ".</html>");
             window.setVisible(true);
             window.setAlwaysOnTop(true);
         }
-        return serial;
+        return serial.toString();
     }
 
     public static String getDateBySerialNumber(String serialNumber){

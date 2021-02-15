@@ -13,15 +13,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class PanelShotsOnTarget extends JPanel{
-    //int WIDTH;
-    //int DEFWIDTH = 1600;
-    //double procWIDTH;
-    //int HEIGHT;
-    //int DEFHEIGHT = 1000;
-    //int graphicWidth = 1250;
-    //int graphicHeight = 410;
-    int graphicHeight = 300;
-    double procHEIGHT;
     String[] listOfTeams;
     JPanel tablePanelMatching;
     int index1 = 0;
@@ -42,12 +33,6 @@ public class PanelShotsOnTarget extends JPanel{
 
     public PanelShotsOnTarget(){
         this.setLayout(new BorderLayout());
-        //WIDTH = width;
-        //HEIGHT = height;
-        //procWIDTH = WIDTH / (double) DEFWIDTH;
-        //procHEIGHT = HEIGHT / (double) DEFHEIGHT;
-        //if (procWIDTH == 1)
-        //    this.graphicWidth = 1300;
         String curSeason = Settings.getCurrentSeason();
         final String path = "database/";
 
@@ -258,7 +243,7 @@ public class PanelShotsOnTarget extends JPanel{
 
                 final JLabel label = new JLabel(labelForTable);
                 label.setLocation(5, otstup);
-                label.setSize(new Dimension((int) (0.98 * WIDTH) - 30, 25));
+                label.setSize(new Dimension(600, 25));
                 otstup += 25;
                 label.setFont(fontLabel);
                 container.add(label);
@@ -409,7 +394,7 @@ public class PanelShotsOnTarget extends JPanel{
                     }
                     final JLabel label2 = new JLabel(labelForTableOpponents);
                     label2.setLocation(5, otstup);
-                    label2.setSize(new Dimension((int) (0.98 * WIDTH) - 30, 25));
+                    label2.setSize(new Dimension(900, 25));
                     otstup += 25;
                     label2.setFont(fontLabel);
                     container.add(label2);
@@ -469,7 +454,7 @@ public class PanelShotsOnTarget extends JPanel{
                 paramsPanel.setSize(600, 170);
                 paramsPanel.setLocation(640, 10);
                 container.add(paramsPanel);
-                container.setPreferredSize(new Dimension((int) (0.9 * WIDTH), otstup)); // 275 + (selector.listOfMatches.size()+1)*25)
+                container.setPreferredSize(new Dimension(700, otstup)); // 275 + (selector.listOfMatches.size()+1)*25)
 
                 JLabel labelHeaderMatching = new JLabel("Таблица созданных и полученных бросков в створ (сред.)");
                 labelHeaderMatching.setLocation(640, 190);
@@ -720,13 +705,13 @@ public class PanelShotsOnTarget extends JPanel{
                 }
                 final JLabel label = new JLabel(labelText);
                 label.setLocation(10, 0);
-                label.setSize(new Dimension((int) (0.995 * WIDTH) - 30, 25));
+                label.setSize(new Dimension(500, 25));
                 Font fontLabel = new Font("Arial", Font.BOLD, 15);
                 label.setFont(fontLabel);
                 container.add(label);
 
                 scrollPane = new JScrollPane(container);
-                scrollPane.setPreferredSize(new Dimension((int) (0.995 * WIDTH), (int) (0.87 * HEIGHT)));
+                scrollPane.setPreferredSize(new Dimension(500, (int) (0.87 * HEIGHT)));
                 scrollPane.setLocation(5, 50);
                 scrollPane.setVerticalScrollBar( new JScrollBar() {
                     public int getUnitIncrement( int direction ) {
@@ -737,17 +722,17 @@ public class PanelShotsOnTarget extends JPanel{
         } else {
             JPanel container = new JPanel(/*new GridLayout(3,1,0,0)*/);
             container.setLayout(null);
-            container.setPreferredSize(new Dimension((int) (0.48 * WIDTH), 730));
+            container.setPreferredSize(new Dimension(500, 730));
 
             final JLabel label = new JLabel("Задайте все условия поиска. Лига и/или команда не заданы.");
             label.setLocation(10, 0);
-            label.setSize(new Dimension((int) (0.995 * WIDTH) - 30, 25));
+            label.setSize(new Dimension(500, 25));
             Font fontLabel = new Font("Arial", Font.BOLD, 15);
             label.setFont(fontLabel);
             container.add(label);
 
             scrollPane = new JScrollPane(container);
-            scrollPane.setPreferredSize(new Dimension((int) (0.995 * WIDTH), (int) (0.87 * HEIGHT)));
+            scrollPane.setPreferredSize(new Dimension(500, (int) (0.87 * HEIGHT)));
             scrollPane.setLocation(5, 50);
             scrollPane.setVerticalScrollBar(new JScrollBar() {
                 public int getUnitIncrement(int direction) {

@@ -222,7 +222,7 @@ public class TrendMaker {
                     }
                     percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
                     if (percent > percentBorder){
-                        resultList.add("ТМ(5.5): " + success + " матчей из " + selector.listOfMatches.size() + " (" + percent + "%)");
+                        resultList.add("ТБ(5.5): " + success + " матчей из " + selector.listOfMatches.size() + " (" + percent + "%)");
                     }
                     break;
                 }
@@ -244,7 +244,7 @@ public class TrendMaker {
                     }
                     percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
                     if (percent > percentBorder){
-                        resultList.add("ТБ(4.5): " + success + " матчей из " + selector.listOfMatches.size() + " (" + percent + "%)");
+                        resultList.add("ТМ(4.5): " + success + " матчей из " + selector.listOfMatches.size() + " (" + percent + "%)");
                     }
                     break;
                 }
