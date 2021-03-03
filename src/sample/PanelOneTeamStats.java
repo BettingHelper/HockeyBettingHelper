@@ -291,7 +291,14 @@ public class PanelOneTeamStats extends JPanel{
                 container.add(label4);
 
                 String forma = selector.pList.get(16).get(1);
-                final Dimension defFormaLocation = new Dimension(65,otstup + 3);
+                if (settings.form.equals("rightToLeft")){
+                    StringBuilder s = new StringBuilder();
+                    for (int j=forma.length()-1; j>=0; j--){
+                        s.append(forma.charAt(j));
+                    }
+                    forma = s.toString();
+                }
+                final Dimension defFormaLocation = new Dimension(70,otstup + 3);
                 for (int i=0; i<forma.length(); i++){
                     JLabel imageLabel = null;
                     if (forma.substring(i, i+1).equals("W")){
@@ -313,6 +320,8 @@ public class PanelOneTeamStats extends JPanel{
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             int numberOfMatch = (finalImageLabel.getX() - defFormaLocation.width)/25;
+                            if (settings.form.equals("rightToLeft"))
+                                numberOfMatch = selector.listOfMatches.size() - numberOfMatch - 1;
                             if (selector.listOfMatches.size() > 20)
                                 numberOfMatch = numberOfMatch + selector.listOfMatches.size() - 20;
                             WindowMatchStats window = new WindowMatchStats(selector.listOfMatches.get(numberOfMatch));
@@ -326,7 +335,10 @@ public class PanelOneTeamStats extends JPanel{
                         }
                         @Override
                         public void mouseEntered(MouseEvent e) {
+                            setCursor(Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
                             int numberOfMatch = (finalImageLabel.getX() - defFormaLocation.width)/25;
+                            if (settings.form.equals("rightToLeft"))
+                                numberOfMatch = selector.listOfMatches.size() - numberOfMatch - 1;
                             if (selector.listOfMatches.size() > 20)
                                 numberOfMatch = numberOfMatch + selector.listOfMatches.size() - 20;
                             String s = "<html>   " + selector.listOfMatches.get(numberOfMatch).homeTeam + " - " + selector.listOfMatches.get(numberOfMatch).awayTeam + "<br>";
