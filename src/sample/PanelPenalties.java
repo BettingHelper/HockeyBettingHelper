@@ -436,83 +436,28 @@ public class PanelPenalties extends JPanel{
                 graphAndTables.add(panelGraphics, BorderLayout.CENTER);
                 allInfoPanel.add(graphAndTables, BorderLayout.WEST);
 
-                /*JPanel panelTables = new JPanel(new VerticalLayout());
+                paramsChooser.setSelectedIndex(index1);
+                String[] list = Parameters.getIndex();
+                DefaultComboBoxModel modelH = new DefaultComboBoxModel(list);
+                indexChooser.setModel(modelH);
+                indexChooser.setSelectedIndex(index2);
+                slider.setValue(index3);
+                final double[] sliderParams = Parameters.getValues((String) paramsChooser.getSelectedItem(), (String) indexChooser.getSelectedItem());
+                stepSlider = sliderParams[2];
 
-                JPanel table0 = new JPanel();
-                table0.setPreferredSize(new Dimension(245, graphicHeight));
-                table0.setBackground(new Color(238, 238, 238));
-                if (leagueName.equals("KHL"))
-                    panelTables.add(table0);
-
-                JPanel tablePenMinutes = TableMaker.getTablePenMinutes(teamName, selector);
-                tablePenMinutes.setPreferredSize(new Dimension(245, graphicHeight));
-                tablePenMinutes.setBackground(new Color(238, 238, 238));
-                panelTables.add(tablePenMinutes);
-
-                JPanel table1 = new JPanel();
-                table1.setPreferredSize(new Dimension(245, graphicHeight));
-                table1.setBackground(new Color(238, 238, 238));
-                if (flagTablePenOpponents)
-                    panelTables.add(table1);
-
-                JPanel table2 = new JPanel();
-                table2.setPreferredSize(new Dimension(245, graphicHeight));
-                table2.setBackground(new Color(238, 238, 238));
-                if (flagTablePenOpponents)
-                    panelTables.add(table2);
-
-                JPanel tablePenMinutes1per = TableMaker.getTablePenMinutes1per(teamName, selector);
-                tablePenMinutes1per.setPreferredSize(new Dimension(245, graphicHeight));
-                tablePenMinutes1per.setBackground(new Color(238, 238, 238));
-                panelTables.add(tablePenMinutes1per);
-
-                JPanel tablePenMinutes2per = TableMaker.getTablePenMinutes2per(teamName, selector);
-                tablePenMinutes2per.setPreferredSize(new Dimension(245, graphicHeight));
-                tablePenMinutes2per.setBackground(new Color(238, 238, 238));
-                panelTables.add(tablePenMinutes2per);
-
-                JPanel tablePenMinutes3per = TableMaker.getTablePenMinutes3per(teamName, selector);
-                tablePenMinutes3per.setPreferredSize(new Dimension(245, graphicHeight));
-                tablePenMinutes3per.setBackground(new Color(238, 238, 238));
-                panelTables.add(tablePenMinutes3per);
-
-                JPanel table2MinPenalties = TableMaker.getTablePen2minutes(teamName, selector);
-                table2MinPenalties.setPreferredSize(new Dimension(245, graphicHeight));
-                table2MinPenalties.setBackground(new Color(238, 238, 238));
-                panelTables.add(table2MinPenalties);
-
-                JPanel table3 = new JPanel();
-                table3.setPreferredSize(new Dimension(245, graphicHeight));
-                table3.setBackground(new Color(238, 238, 238));
-                if (flagTablePenOpponents)
-                    panelTables.add(table3);
-
-                JPanel table4 = new JPanel();
-                table4.setPreferredSize(new Dimension(245, graphicHeight));
-                table4.setBackground(new Color(238, 238, 238));
-                if (flagTablePenOpponents)
-                    panelTables.add(table4);
-
-                JPanel table2MinPenalties1per = TableMaker.getTablePen2minutes1per(teamName, selector);
-                table2MinPenalties1per.setPreferredSize(new Dimension(245, graphicHeight));
-                table2MinPenalties1per.setBackground(new Color(238, 238, 238));
-                panelTables.add(table2MinPenalties1per);
-
-                JPanel table2MinPenalties2per = TableMaker.getTablePen2minutes2per(teamName, selector);
-                table2MinPenalties2per.setPreferredSize(new Dimension(245, graphicHeight));
-                table2MinPenalties2per.setBackground(new Color(238, 238, 238));
-                panelTables.add(table2MinPenalties2per);
-
-                JPanel table2MinPenalties3per = TableMaker.getTablePen2minutes3per(teamName, selector);
-                table2MinPenalties3per.setPreferredSize(new Dimension(245, graphicHeight));
-                table2MinPenalties3per.setBackground(new Color(238, 238, 238));
-                panelTables.add(table2MinPenalties3per);
-
-                panelTables.setPreferredSize(new Dimension(245, graphicHeight));
-                graphAndTables.add(panelTables, BorderLayout.EAST);
-
-                allInfoPanel.add(graphAndTables, BorderLayout.WEST);*/
-
+                if (sliderParams[2] > 0){
+                    minSliderValue = sliderParams[0];
+                    stepSlider = sliderParams[2];
+                    leftValue.setText(String.valueOf(sliderParams[0]));
+                    rightValue.setText(String.valueOf(sliderParams[1]));
+                    bottomValue.setText("Выбрано значение: " + String.valueOf(valueForSlider));
+                    getParamsPanel(paramsPanel, teamName, selector, paramsChooser, indexChooser, valueForSlider);
+                    slider.setMajorTickSpacing(1);
+                    slider.setPaintTicks(true);
+                    slider.setEnabled(true);
+                    int numberOfVariants = (int) ((sliderParams[1] - sliderParams[0]) / sliderParams[2] + 1);
+                    slider.setMaximum(numberOfVariants-1);
+                }
 
 
                 ////////////////////////ГРАФИКИ И ТАБЛИЦЫ БОЛЬШЕ НЕ ВСТАВЛЯЮ
@@ -559,7 +504,7 @@ public class PanelPenalties extends JPanel{
                 indexChooser.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-//                      index2 = indexChooser.getSelectedIndex();
+                      index2 = indexChooser.getSelectedIndex();
                         double[] sliderParams = Parameters.getValues((String) paramsChooser.getSelectedItem(), (String) indexChooser.getSelectedItem());
                         minSliderValue = sliderParams[0];
                         valueForSlider = sliderParams[0];

@@ -1171,7 +1171,7 @@ public class TrendMaker {
                     while (!flag){
                         success = 0;
                         for (int j=0; j<selector.listOfMatches.size(); j++){
-                            if (selector.listOfMatches.get(j).homePenaltyMinutes + selector.listOfMatches.get(j).awayPenaltyMinutes < tmPenTime)
+                            if ((selector.listOfMatches.get(j).home2MinPenalties + selector.listOfMatches.get(j).away2MinPenalties)*2 < tmPenTime)
                                 success++;
                         }
                         percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
@@ -1201,7 +1201,7 @@ public class TrendMaker {
                     while (!flag){
                         success = 0;
                         for (int j=0; j<selector.listOfMatches.size(); j++){
-                            if (selector.listOfMatches.get(j).homePenaltyMinutes + selector.listOfMatches.get(j).awayPenaltyMinutes > tbPenTime)
+                            if ((selector.listOfMatches.get(j).home2MinPenalties + selector.listOfMatches.get(j).away2MinPenalties)*2 > tbPenTime)
                                 success++;
                         }
                         percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
@@ -1233,10 +1233,10 @@ public class TrendMaker {
                         success = 0;
                         for (int j=0; j<selector.listOfMatches.size(); j++){
                             if (selector.listOfMatches.get(j).homeTeam.equals(team)){
-                                if (selector.listOfMatches.get(j).homePenaltyMinutes - selector.listOfMatches.get(j).awayPenaltyMinutes + fora > 0)
+                                if ((selector.listOfMatches.get(j).home2MinPenalties - selector.listOfMatches.get(j).away2MinPenalties)*2 + fora > 0)
                                     success++;
                             } else{
-                                if (selector.listOfMatches.get(j).awayPenaltyMinutes - selector.listOfMatches.get(j).homePenaltyMinutes + fora > 0)
+                                if ((selector.listOfMatches.get(j).away2MinPenalties - selector.listOfMatches.get(j).home2MinPenalties)*2 + fora > 0)
                                     success++;
                             }
                         }
@@ -1271,10 +1271,10 @@ public class TrendMaker {
                         success = 0;
                         for (int j=0; j<selector.listOfMatches.size(); j++){
                             if (selector.listOfMatches.get(j).homeTeam.equals(team)){
-                                if (selector.listOfMatches.get(j).awayPenaltyMinutes - selector.listOfMatches.get(j).homePenaltyMinutes + fora > 0)
+                                if ((selector.listOfMatches.get(j).away2MinPenalties - selector.listOfMatches.get(j).home2MinPenalties)*2 + fora > 0)
                                     success++;
                             } else{
-                                if (selector.listOfMatches.get(j).homePenaltyMinutes - selector.listOfMatches.get(j).awayPenaltyMinutes + fora > 0)
+                                if ((selector.listOfMatches.get(j).home2MinPenalties - selector.listOfMatches.get(j).away2MinPenalties)*2 + fora > 0)
                                     success++;
                             }
                         }
@@ -1309,10 +1309,10 @@ public class TrendMaker {
                         success = 0;
                         for (int j=0; j<selector.listOfMatches.size(); j++){
                             if (selector.listOfMatches.get(j).homeTeam.equals(team)){
-                                if (selector.listOfMatches.get(j).homePenaltyMinutes > itbPenTime)
+                                if (selector.listOfMatches.get(j).home2MinPenalties*2 > itbPenTime)
                                     success++;
                             } else{
-                                if (selector.listOfMatches.get(j).awayPenaltyMinutes > itbPenTime)
+                                if (selector.listOfMatches.get(j).away2MinPenalties*2 > itbPenTime)
                                     success++;
                             }
                         }
@@ -1343,10 +1343,10 @@ public class TrendMaker {
                         success = 0;
                         for (int j=0; j<selector.listOfMatches.size(); j++){
                             if (selector.listOfMatches.get(j).homeTeam.equals(team)){
-                                if (selector.listOfMatches.get(j).homePenaltyMinutes < itmPenTime)
+                                if (selector.listOfMatches.get(j).home2MinPenalties * 2 < itmPenTime)
                                     success++;
                             } else{
-                                if (selector.listOfMatches.get(j).awayPenaltyMinutes < itmPenTime)
+                                if (selector.listOfMatches.get(j).away2MinPenalties * 2 < itmPenTime)
                                     success++;
                             }
                         }
@@ -1377,10 +1377,10 @@ public class TrendMaker {
                         success = 0;
                         for (int j=0; j<selector.listOfMatches.size(); j++){
                             if (selector.listOfMatches.get(j).homeTeam.equals(team)){
-                                if (selector.listOfMatches.get(j).awayPenaltyMinutes > itbPenTime)
+                                if (selector.listOfMatches.get(j).away2MinPenalties * 2 > itbPenTime)
                                     success++;
                             } else{
-                                if (selector.listOfMatches.get(j).homePenaltyMinutes > itbPenTime)
+                                if (selector.listOfMatches.get(j).home2MinPenalties * 2 > itbPenTime)
                                     success++;
                             }
                         }
@@ -1411,10 +1411,10 @@ public class TrendMaker {
                         success = 0;
                         for (int j=0; j<selector.listOfMatches.size(); j++){
                             if (selector.listOfMatches.get(j).homeTeam.equals(team)){
-                                if (selector.listOfMatches.get(j).awayPenaltyMinutes < itmPenTime)
+                                if (selector.listOfMatches.get(j).away2MinPenalties * 2 < itmPenTime)
                                     success++;
                             } else{
-                                if (selector.listOfMatches.get(j).homePenaltyMinutes < itmPenTime)
+                                if (selector.listOfMatches.get(j).home2MinPenalties * 2 < itmPenTime)
                                     success++;
                             }
                         }
@@ -1441,14 +1441,14 @@ public class TrendMaker {
                     success = 0;
                     for (int j=0; j<selector.listOfMatches.size(); j++){
                         if (selector.listOfMatches.get(j).homeTeam.equals(team)){
-                            if (selector.listOfMatches.get(j).homePenaltyMinutes1stPeriod - selector.listOfMatches.get(j).awayPenaltyMinutes1stPeriod > 0)
+                            if ((selector.listOfMatches.get(j).home2MinPenalties1stPeriod - selector.listOfMatches.get(j).away2MinPenalties1stPeriod)*2 > 0)
                                 success++;
-                            if (selector.listOfMatches.get(j).homePenaltyMinutes1stPeriod - selector.listOfMatches.get(j).awayPenaltyMinutes1stPeriod == 0)
+                            if ((selector.listOfMatches.get(j).home2MinPenalties1stPeriod - selector.listOfMatches.get(j).away2MinPenalties1stPeriod)*2 == 0)
                                 vozvrat++;
                         } else{
-                            if (selector.listOfMatches.get(j).awayPenaltyMinutes1stPeriod - selector.listOfMatches.get(j).homePenaltyMinutes1stPeriod > 0)
+                            if ((selector.listOfMatches.get(j).away2MinPenalties1stPeriod - selector.listOfMatches.get(j).home2MinPenalties1stPeriod)*2 > 0)
                                 success++;
-                            if (selector.listOfMatches.get(j).awayPenaltyMinutes1stPeriod - selector.listOfMatches.get(j).homePenaltyMinutes1stPeriod == 0)
+                            if ((selector.listOfMatches.get(j).away2MinPenalties1stPeriod - selector.listOfMatches.get(j).home2MinPenalties1stPeriod)*2 == 0)
                                 vozvrat++;
                         }
                     }
@@ -1466,14 +1466,14 @@ public class TrendMaker {
                     success = 0;
                     for (int j=0; j<selector.listOfMatches.size(); j++){
                         if (selector.listOfMatches.get(j).awayTeam.equals(team)){
-                            if (selector.listOfMatches.get(j).homePenaltyMinutes1stPeriod - selector.listOfMatches.get(j).awayPenaltyMinutes1stPeriod > 0)
+                            if ((selector.listOfMatches.get(j).home2MinPenalties1stPeriod - selector.listOfMatches.get(j).away2MinPenalties1stPeriod)*2 > 0)
                                 success++;
-                            if (selector.listOfMatches.get(j).homePenaltyMinutes1stPeriod - selector.listOfMatches.get(j).awayPenaltyMinutes1stPeriod == 0)
+                            if ((selector.listOfMatches.get(j).home2MinPenalties1stPeriod - selector.listOfMatches.get(j).away2MinPenalties1stPeriod)*2 == 0)
                                 vozvrat++;
                         } else{
-                            if (selector.listOfMatches.get(j).awayPenaltyMinutes1stPeriod - selector.listOfMatches.get(j).homePenaltyMinutes1stPeriod > 0)
+                            if ((selector.listOfMatches.get(j).away2MinPenalties1stPeriod - selector.listOfMatches.get(j).home2MinPenalties1stPeriod)*2 > 0)
                                 success++;
-                            if (selector.listOfMatches.get(j).awayPenaltyMinutes1stPeriod - selector.listOfMatches.get(j).homePenaltyMinutes1stPeriod == 0)
+                            if ((selector.listOfMatches.get(j).away2MinPenalties1stPeriod - selector.listOfMatches.get(j).home2MinPenalties1stPeriod)*2 == 0)
                                 vozvrat++;
                         }
                     }

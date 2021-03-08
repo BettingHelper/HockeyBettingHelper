@@ -526,7 +526,28 @@ public class PanelShotsOnTarget extends JPanel{
                 graphAndTables.add(panelGraphics, BorderLayout.CENTER);
                 allInfoPanel.add(graphAndTables, BorderLayout.WEST);
 
+                paramsChooser.setSelectedIndex(index1);
+                String[] list = Parameters.getIndex();
+                DefaultComboBoxModel modelH = new DefaultComboBoxModel(list);
+                indexChooser.setModel(modelH);
+                indexChooser.setSelectedIndex(index2);
+                slider.setValue(index3);
+                final double[] sliderParams = Parameters.getValues((String) paramsChooser.getSelectedItem(), (String) indexChooser.getSelectedItem());
+                stepSlider = sliderParams[2];
 
+                if (sliderParams[2] > 0){
+                    minSliderValue = sliderParams[0];
+                    stepSlider = sliderParams[2];
+                    leftValue.setText(String.valueOf(sliderParams[0]));
+                    rightValue.setText(String.valueOf(sliderParams[1]));
+                    bottomValue.setText("Выбрано значение: " + String.valueOf(valueForSlider));
+                    getParamsPanel(paramsPanel, teamName, selector, paramsChooser, indexChooser, valueForSlider);
+                    slider.setMajorTickSpacing(1);
+                    slider.setPaintTicks(true);
+                    slider.setEnabled(true);
+                    int numberOfVariants = (int) ((sliderParams[1] - sliderParams[0]) / sliderParams[2] + 1);
+                    slider.setMaximum(numberOfVariants-1);
+                }
 
                 ////////////////////////ГРАФИКИ И ТАБЛИЦЫ БОЛЬШЕ НЕ ВСТАВЛЯЮ
                 scrollPane = new JScrollPane(allInfoPanel);
@@ -559,7 +580,7 @@ public class PanelShotsOnTarget extends JPanel{
                 indexChooser.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-//                      index2 = indexChooser.getSelectedIndex();
+                        index2 = indexChooser.getSelectedIndex();
                         double[] sliderParams = Parameters.getValues((String) paramsChooser.getSelectedItem(), (String) indexChooser.getSelectedItem());
                         minSliderValue = sliderParams[0];
                         valueForSlider = sliderParams[0];
