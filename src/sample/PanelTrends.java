@@ -55,7 +55,7 @@ public class PanelTrends extends JPanel{
         leagueName = listOfLeagues[0];
 
 
-        String[] params = {"Голы", "Броски в створ", "Штрафное время"};
+        String[] params = {"Голы", "Броски в створ", "Штрафное время", "Вбрасывания", "Блокированные броски", "Силовые приемы"};
         final JComboBox<String> paramChooser = new JComboBox<>(params);
         headersPanel.add(paramChooser);
         parameter = params[0];
@@ -176,9 +176,11 @@ public class PanelTrends extends JPanel{
     }
 
     public void setFilters(String league){
+        buttonShowInfo.setEnabled(false);
         String season = Settings.getCurrentSeasonInLeague(league);
         seasonChooser.setSelectedItem("Сезон " + season);
         leagueChooser.setSelectedItem(league);
+        buttonShowInfo.setEnabled(true);
 
     }
 

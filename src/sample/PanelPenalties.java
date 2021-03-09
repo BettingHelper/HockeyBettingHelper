@@ -29,6 +29,7 @@ public class PanelPenalties extends JPanel{
 
     JComboBox<String> seasonCB;
     JComboBox<String> leagueChooser;
+    JButton buttonShowInfo;
 
     public PanelPenalties(){
         this.setLayout(new BorderLayout());
@@ -73,7 +74,7 @@ public class PanelPenalties extends JPanel{
         final JComboBox<String> teamLastOrFullSeason = new JComboBox<>(lastOrFullSeason);
         panelChoosers.add(teamLastOrFullSeason);
 
-        final JButton buttonShowInfo = new JButton("Отобразить!");
+        buttonShowInfo = new JButton("Отобразить!");
         Font fontForButton = new Font("", 0, 18);
         buttonShowInfo.setFont(fontForButton);
         panelChoosers.add(buttonShowInfo);
@@ -626,9 +627,11 @@ public class PanelPenalties extends JPanel{
     }
 
     public void setFilters(String league){
+        buttonShowInfo.setEnabled(false);
         String season = Settings.getCurrentSeasonInLeague(league);
         seasonCB.setSelectedItem("Сезон " + season);
         leagueChooser.setSelectedItem(league);
+        buttonShowInfo.setEnabled(true);
     }
 
 }

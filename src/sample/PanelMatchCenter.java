@@ -219,14 +219,10 @@ public class PanelMatchCenter extends JPanel{
                 buttonStats.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        panelMatching.setFilters(currentLeague, homeTeam, awayTeam);
-                        panelOneTeamStats.setFilters(currentLeague);
-                        panelConfrontation.setFilters(currentLeague, homeTeam, awayTeam);
-                        panelTablesByLeague.setFilters(currentLeague);
-                        panelTrends.setFilters(currentLeague);
-                        panelShotsOnTarget.setFilters(currentLeague);
-                        panelPenalties.setFilters(currentLeague);
-                        panelAdvancedStatistics.setFilters(currentLeague, homeTeam, awayTeam);
+                        FiltersThread filtersThread = new FiltersThread(panelMatching, panelOneTeamStats, panelConfrontation, panelTablesByLeague,
+                                panelTrends, panelShotsOnTarget, panelPenalties, panelAdvancedStatistics, currentLeague, homeTeam, awayTeam);
+                        filtersThread.start();
+
                     }
                 });
 

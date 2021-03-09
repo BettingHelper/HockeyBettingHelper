@@ -30,6 +30,7 @@ public class PanelShotsOnTarget extends JPanel{
 
     JComboBox<String> seasonCB;
     JComboBox<String> leagueChooser;
+    JButton buttonShowInfo;
 
     public PanelShotsOnTarget(){
         this.setLayout(new BorderLayout());
@@ -79,7 +80,7 @@ public class PanelShotsOnTarget extends JPanel{
 //        teamLastOrFullSeason.setPreferredSize(new Dimension((int) (140 * procWIDTH), 30));
         panelChoosers.add(teamLastOrFullSeason);
 
-        final JButton buttonShowInfo = new JButton("Отобразить!");
+        buttonShowInfo = new JButton("Отобразить!");
 //        buttonShowInfo.setPreferredSize(new Dimension((int) (150 * procWIDTH), 30));
         Font fontForButton = new Font("", 0, 18);
         buttonShowInfo.setFont(fontForButton);
@@ -802,9 +803,11 @@ public class PanelShotsOnTarget extends JPanel{
     }
 
     public void setFilters(String league){
+        buttonShowInfo.setEnabled(false);
         String season = Settings.getCurrentSeasonInLeague(league);
         seasonCB.setSelectedItem("Сезон " + season);
         leagueChooser.setSelectedItem(league);
+        buttonShowInfo.setEnabled(true);
     }
 
 }

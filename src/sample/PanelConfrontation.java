@@ -26,6 +26,7 @@ public class PanelConfrontation extends JPanel{
     JComboBox<String> teamChooserHome;
     JComboBox<String> teamChooserAway;
     JComboBox<String> allOrHomeAwayComboBox;
+    JButton buttonShow;
 
     public PanelConfrontation(){
         this.setLayout(new BorderLayout());
@@ -84,7 +85,7 @@ public class PanelConfrontation extends JPanel{
         allOrHomeAwayComboBox = new JComboBox<>(allOrHomeAway);
         panelChoosers.add(allOrHomeAwayComboBox);
 
-        final JButton buttonShow = new JButton("Отобразить!");
+        buttonShow = new JButton("Отобразить!");
 //        buttonShow.setPreferredSize(new Dimension((int) (200 * procWIDTH), 30));
         Font fontForButton = new Font("", 0, 18);
         buttonShow.setFont(fontForButton);
@@ -661,11 +662,13 @@ public class PanelConfrontation extends JPanel{
     }
 
     public void setFilters(String league, String homeTeam, String awayTeam){
+        buttonShow.setEnabled(false);
         String season = Settings.getCurrentSeasonInLeague(league);
         seasonCB.setSelectedItem("Сезон " + season);
         leagueChooser.setSelectedItem(league);
         teamChooserHome.setSelectedItem(homeTeam);
         teamChooserAway.setSelectedItem(awayTeam);
+        buttonShow.setEnabled(true);
     }
 
 }

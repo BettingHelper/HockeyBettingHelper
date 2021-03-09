@@ -24,6 +24,7 @@ public class PanelMatching extends JPanel{
     JComboBox<String> leftTeamChooser;
     JComboBox<String> leftTeamAllOrHomeOrAway;
     JComboBox<String> leftLastOrFullSeason;
+    JButton leftButtonShowInfo;
     JPanel leftTeamPanel;
     JPanel leftInfoPanel;
 
@@ -32,6 +33,7 @@ public class PanelMatching extends JPanel{
     JComboBox<String> rightTeamChooser;
     JComboBox<String> rightTeamAllOrHomeOrAway;
     JComboBox<String> rightLastOrFullSeason;
+    JButton rightButtonShowInfo;
     JPanel rightTeamPanel;
     JPanel rightInfoPanel;
 
@@ -91,7 +93,7 @@ public class PanelMatching extends JPanel{
 //        leftLastOrFullSeason.setPreferredSize(new Dimension((int) (140 * procWIDTH), 30));
         leftPanelChoosers.add(leftLastOrFullSeason);
 
-        final JButton leftButtonShowInfo = new JButton("Отобразить!");
+        leftButtonShowInfo = new JButton("Отобразить!");
 //        leftButtonShowInfo.setPreferredSize(new Dimension((int) (150 * procWIDTH), 30));
         Font fontForButton = new Font("", 0, 15);
         leftButtonShowInfo.setFont(fontForButton);
@@ -252,7 +254,7 @@ public class PanelMatching extends JPanel{
 //        rightLastOrFullSeason.setPreferredSize(new Dimension((int) (140 * procWIDTH), 30));
         rightPanelChoosers.add(rightLastOrFullSeason);
 
-        final JButton rightButtonShowInfo = new JButton("Отобразить!");
+        rightButtonShowInfo = new JButton("Отобразить!");
 //        rightButtonShowInfo.setPreferredSize(new Dimension((int) (150 * procWIDTH), 30));
         rightButtonShowInfo.setMargin(new Insets(0,0,0,0));
         rightButtonShowInfo.setFont(fontForButton);
@@ -991,6 +993,8 @@ public class PanelMatching extends JPanel{
     }
 
     public void setFilters(String league, String homeTeam, String awayTeam){
+        leftButtonShowInfo.setEnabled(false);
+        rightButtonShowInfo.setEnabled(false);
         String season = Settings.getCurrentSeasonInLeague(league);
         leftSeasonChooser.setSelectedItem("Сезон " + season);
         rightSeasonChooser.setSelectedItem("Сезон " + season);
@@ -1002,5 +1006,7 @@ public class PanelMatching extends JPanel{
         rightTeamAllOrHomeOrAway.setSelectedItem("На выезде");
         leftLastOrFullSeason.setSelectedItem("Весь сезон");
         rightLastOrFullSeason.setSelectedItem("Весь сезон");
+        leftButtonShowInfo.setEnabled(true);
+        rightButtonShowInfo.setEnabled(true);
     }
 }

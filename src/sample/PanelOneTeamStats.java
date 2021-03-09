@@ -43,6 +43,7 @@ public class PanelOneTeamStats extends JPanel{
     JComboBox<String> teamChooser;
     JComboBox<String> teamAllOrHomeOrAway;
     JComboBox<String> lastOrFullSeason;
+    JButton buttonShowInfo;
     JPanel teamPanel;
     JPanel infoPanel;
 
@@ -109,7 +110,7 @@ public class PanelOneTeamStats extends JPanel{
 //        lastOrFullSeason.setPreferredSize(new Dimension((int) (140 * procWIDTH), 30));
         panelChoosers.add(lastOrFullSeason);
 
-        final JButton buttonShowInfo = new JButton("Отобразить!");
+        buttonShowInfo = new JButton("Отобразить!");
 //        buttonShowInfo.setPreferredSize(new Dimension((int) (150 * procWIDTH), 30));
 //        Font fontForButton = new Font("", 0, (int) (20 * procWIDTH * 0.9));
         buttonShowInfo.setFont(font18);
@@ -1063,8 +1064,10 @@ public class PanelOneTeamStats extends JPanel{
     }
 
     public void setFilters(String league){
+        buttonShowInfo.setEnabled(false);
         String season = Settings.getCurrentSeasonInLeague(league);
         seasonChooser.setSelectedItem("Сезон " + season);
         leagueChooser.setSelectedItem(league);
+        buttonShowInfo.setEnabled(true);
     }
 }
