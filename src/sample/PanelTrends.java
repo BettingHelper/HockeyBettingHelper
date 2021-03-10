@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.*;
 
 public class PanelTrends extends JPanel{
@@ -23,6 +24,7 @@ public class PanelTrends extends JPanel{
     ArrayList<Selector> arrayList = new ArrayList<>();
     ArrayList<String> resultList = new ArrayList<>();
     final JButton buttonShowInfo;
+    final JButton buttonToText;
     TrendsThread trendsThread;
     JComboBox<String> seasonChooser;
     JComboBox<String> leagueChooser;
@@ -76,6 +78,11 @@ public class PanelTrends extends JPanel{
         infoPanel.setBorder(BorderFactory.createTitledBorder(""));
 
         this.add(infoPanel);
+
+        buttonToText = new JButton("Экспорт трендов в текстовый вид.");
+        buttonToText.setFont(fontForButton);
+        buttonToText.setEnabled(false);
+        this.add(buttonToText, BorderLayout.SOUTH);
 
         leagueChooser.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -166,13 +173,27 @@ public class PanelTrends extends JPanel{
             }
         });
 
-    }
+        buttonToText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File resFile = new File(System.getProperty("user.home") + "/Desktop/" + leagueName + "_" + parameter + "_trends.txt");
+                try {
+                    // отрываем поток для записи
+                    FileOutputStream fos = new FileOutputStream(resFile);
+                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+                    // пишем данные
+                    for (String s : resultList) {
+                        bw.write(s);
+                        bw.newLine();
+                    }
+                    // закрываем поток
+                    bw.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
-    public static double roundResult(double d, int precise) {
-        precise = (int) Math.pow(10,precise);
-        d = d*precise;
-        int i = (int) Math.round(d);
-        return (double) i/precise;
     }
 
     public void setFilters(String league){

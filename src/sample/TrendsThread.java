@@ -250,6 +250,8 @@ public class TrendsThread extends Thread{
             label.setFont(fontLabel);
             container.add(label);
 
+            panelTrends.buttonToText.setEnabled(true);
+
             scrollPane = new JScrollPane(container);
             scrollPane.setPreferredSize(new Dimension((int) (0.995 * 500), (int) (0.87 * 400)));   // 500 - WIDTH  400 - HEIGHT
             scrollPane.setLocation(5, 50);
@@ -488,7 +490,7 @@ public class TrendsThread extends Thread{
                 }
             }
 
-            //panelTrends.buttonToText.setEnabled(true);
+            panelTrends.buttonToText.setEnabled(true);
 
             scrollPane = new JScrollPane(leftDataPanel);
             scrollPane.setVerticalScrollBar( new JScrollBar() {
