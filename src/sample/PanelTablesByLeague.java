@@ -6,12 +6,19 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.SubCategoryAxis;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.labels.StandardXYItemLabelGenerator;
+import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.tabbedui.VerticalLayout;
 
 import javax.swing.*;
@@ -20,6 +27,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 import java.util.*;
 
 public class PanelTablesByLeague extends JPanel{
@@ -41,6 +49,7 @@ public class PanelTablesByLeague extends JPanel{
     JComboBox<String> seasonCB;
     JComboBox<String> leagueChooser;
     League league;
+    Settings settings;
 
     public PanelTablesByLeague(){
         this.setLayout(new BorderLayout());
@@ -149,6 +158,7 @@ public class PanelTablesByLeague extends JPanel{
         JScrollPane scrollPane = null;
 //        JScrollPane scrollPane = new JScrollPane();
         this.setCursor(Cursor.getPredefinedCursor (Cursor.WAIT_CURSOR));
+        settings = Settings.getSettingsFromFile();
 
         JPanel container = new JPanel(new VerticalLayout());
         season = seasonString.replace("Сезон ", "");
@@ -355,6 +365,22 @@ public class PanelTablesByLeague extends JPanel{
         tablePanel.add(table.getTableHeader(), BorderLayout.NORTH);
 
         container.add(tablePanel);
+
+        JPanel panelButton = new JPanel(new BorderLayout());
+        JButton buttonShowBubble = new JButton("Отобразить графики перекрестных показателей");
+        buttonShowBubble.setFont(fontLabel);
+        panelButton.setBorder(BorderFactory.createEmptyBorder(5, 300, 5, 300));
+
+        if (leagueName.equals("VHL")){
+            buttonShowBubble.setEnabled(false);
+        }
+        panelButton.add(buttonShowBubble);
+
+        container.add(panelButton);
+
+        JPanel bubbleChartsPanel = new JPanel(new BorderLayout());
+        container.add(bubbleChartsPanel);
+
 
         jtf = new JLabel("Диаграммы голов в основное время в " + leagueName);
         jtf.setFont(new Font("", Font.BOLD, 18));
@@ -585,7 +611,16 @@ public class PanelTablesByLeague extends JPanel{
             }
         });
 
+        buttonShowBubble.addActionListener(e -> {
+            if ( bubbleChartsPanel.getComponentCount() == 0){
+                bubbleChartsPanel.add(getBubbleCharts());
+                buttonShowBubble.setText("Скрыть графики перекрестных показателей");
+            } else {
+                bubbleChartsPanel.removeAll();
+                buttonShowBubble.setText("Отобразить графики перекрестных показателей");
+            }
 
+        });
 
         scrollPane = new JScrollPane(container);
         scrollPane.setVerticalScrollBar( new JScrollBar() {
@@ -603,6 +638,195 @@ public class PanelTablesByLeague extends JPanel{
         seasonCB.setSelectedItem("Сезон " + season);
         leagueChooser.setSelectedItem(league);
         buttonShowInfo.setEnabled(true);
+    }
+
+    public JPanel getBubbleCharts(){
+        JPanel result = new JPanel(new GridLayout(0, 2, 0, 0));
+
+        ArrayList<String> table1; // основная / домашняя таблица
+        ArrayList<String> table2; // основная / выездная таблица
+        int numberOfCharts = 5;
+        int totalCharts = 5;
+
+        ArrayList<String> graphicTitles = new ArrayList<>();
+
+        if (settings.bubbleChartsHA){
+            table1 = league.homeStatsTable;
+            table2 = league.awayStatsTable;
+            numberOfCharts *= 2;
+
+            graphicTitles.add("Дома: Голы в ОВ + % реал. бросков");
+            graphicTitles.add("На выезде: Голы в ОВ + % реал. бросков");
+            graphicTitles.add("Дома: Проп.голы в ОВ + % реал. бросков противника");
+            graphicTitles.add("На выезде: Проп.голы в ОВ + % реал. бросков противника");
+            graphicTitles.add("Дома: % реал. большинства + % 'убийства' меньшинства");
+            graphicTitles.add("На выезде: % реал. большинства + % 'убийства' меньшинства");
+            graphicTitles.add("Дома: Броски в створ + Броски мимо");
+            graphicTitles.add("На выезде: Броски в створ + Броски мимо");
+            graphicTitles.add("Дома: Силовые приемы + 2 минутные удаления");
+            graphicTitles.add("На выезде: Силовые приемы + 2 минутные удаления");
+
+        } else {
+            table1 = league.overallStatsTable;
+            table2 = league.overallStatsTable;
+
+            graphicTitles.add("Весь сезон: Голы в ОВ + % реал. бросков");
+            graphicTitles.add("Весь сезон: Проп.голы в ОВ + % реал. бросков противника");
+            graphicTitles.add("Весь сезон: % реал. большинства + % 'убийства' меньшинства");
+            graphicTitles.add("Весь сезон: Броски в створ + Броски мимо");
+            graphicTitles.add("Весь сезон: Силовые приемы + 2 минутные удаления");
+        }
+
+        int numberOfTeams = league.overallStatsTable.size();
+        ArrayList<String> teamsList = new ArrayList<>();
+        double [][][] data = new double[numberOfCharts][numberOfTeams][2];
+
+        for (int i=0; i<numberOfTeams; i++){
+            int index = 0;
+            int matches1 = Integer.parseInt(table1.get(i).split("\\*")[1]);
+            int matches2 = Integer.parseInt(table2.get(i).split("\\*")[1]);
+            teamsList.add(table1.get(i).split("\\*")[0]);
+
+            for(int j=0; j<totalCharts; j++){
+                double par1_Team1 = 0;
+                double par2_Team1 = 0;
+
+                double par1_Team2 = 0;
+                double par2_Team2 = 0;
+
+                switch (j){
+                    case 0:{ // Голы в ОВ + % реал. бросков
+                        par1_Team1 = MyMath.round(Double.parseDouble(table1.get(i).split("\\*")[2].split("_")[0]) / matches1,4);
+                        par2_Team1 = MyMath.round(100 * Double.parseDouble(table1.get(i).split("\\*")[2].split("_")[0]) / Double.parseDouble(table1.get(i).split("\\*")[7].split("_")[0]),4);
+
+                        par1_Team2 = MyMath.round(Double.parseDouble(table2.get(i).split("\\*")[2].split("_")[0]) / matches2,4);
+                        par2_Team2 = MyMath.round(100 * Double.parseDouble(table2.get(i).split("\\*")[2].split("_")[0]) / Double.parseDouble(table2.get(i).split("\\*")[7].split("_")[0]),4);
+                        break;
+                    }
+                    case 1:{// Проп.голы в ОВ + % реал. бросков противника
+                        par1_Team1 = MyMath.round(Double.parseDouble(table1.get(i).split("\\*")[2].split("_")[1]) / matches1,4);
+                        par2_Team1 = MyMath.round(100 * Double.parseDouble(table1.get(i).split("\\*")[2].split("_")[1]) / Double.parseDouble(table1.get(i).split("\\*")[7].split("_")[1]),4);
+
+                        par1_Team2 = MyMath.round(Double.parseDouble(table2.get(i).split("\\*")[2].split("_")[1])  / matches2,4);
+                        par2_Team2 = MyMath.round(100 * Double.parseDouble(table2.get(i).split("\\*")[2].split("_")[1]) / Double.parseDouble(table2.get(i).split("\\*")[7].split("_")[1]),4);
+                        break;
+                    }
+                    case 2:{// % реал. большинства + % 'убийства' меньшинства
+                        par1_Team1 = MyMath.round(100 * Double.parseDouble(table1.get(i).split("\\*")[19].split("_")[0]) / Double.parseDouble(table1.get(i).split("\\*")[20].split("_")[0]),4);
+                        par2_Team1 = MyMath.round(100 * Double.parseDouble(table1.get(i).split("\\*")[19].split("_")[1]) / Double.parseDouble(table1.get(i).split("\\*")[20].split("_")[1]),4);
+
+                        par1_Team2 = MyMath.round(100 * Double.parseDouble(table2.get(i).split("\\*")[19].split("_")[0]) / Double.parseDouble(table2.get(i).split("\\*")[20].split("_")[0]),4);
+                        par2_Team2 = MyMath.round(100 * Double.parseDouble(table2.get(i).split("\\*")[19].split("_")[1]) / Double.parseDouble(table2.get(i).split("\\*")[20].split("_")[1]),4);
+                        break;
+                    }
+                    case 3:{ // Броски в створ + Броски мимо
+                        par1_Team1 = MyMath.round(Double.parseDouble(table1.get(i).split("\\*")[7].split("_")[0]) / matches1,4);
+                        par2_Team1 = MyMath.round(Double.parseDouble(table1.get(i).split("\\*")[18].split("_")[0]) / matches1,4);
+
+                        par1_Team2 = MyMath.round(Double.parseDouble(table2.get(i).split("\\*")[7].split("_")[0]) / matches2,4);
+                        par2_Team2 = MyMath.round(Double.parseDouble(table2.get(i).split("\\*")[18].split("_")[0]) / matches2,4);
+
+                        break;
+                    }
+                    case 4:{ // Силовые приемы + 2 минутные удаления
+                        par1_Team1 = MyMath.round(Double.parseDouble(table1.get(i).split("\\*")[15].split("_")[0]) / matches1,4);
+                        par2_Team1 = MyMath.round(Double.parseDouble(table1.get(i).split("\\*")[17].split("_")[0]) / matches1,4);
+
+                        par1_Team2 = MyMath.round(Double.parseDouble(table2.get(i).split("\\*")[15].split("_")[0]) / matches2,4);
+                        par2_Team2 = MyMath.round(Double.parseDouble(table2.get(i).split("\\*")[17].split("_")[0]) / matches2,4);
+
+                        break;
+                    }
+                    /*case 4:{
+
+                        break;
+                    }
+                    case 5:{
+
+                        break;
+                    }
+                    case 6:{
+
+                        break;
+                    }
+                    case 7:{
+
+                        break;
+                    }
+                    case 8:{
+
+                        break;
+                    }
+                    case 9:{
+
+                        break;
+                    }*/
+                }
+
+
+                if (settings.bubbleChartsHA){
+                    data[index][i][0] = par1_Team1;
+                    data[index][i][1] = par2_Team1;
+
+                    data[index+1][i][0] = par1_Team2;
+                    data[index+1][i][1] = par2_Team2;
+
+                    index += 2;
+                } else {
+                    data[index][i][0] = par1_Team1;
+                    data[index][i][1] = par2_Team1;
+
+                    index ++;
+                }
+
+            }
+
+        }
+
+        for (int k=0; k<data.length; k++){
+            XYDataset dataset = createDataset(k, data, teamsList);
+            JFreeChart chart = ChartFactory.createScatterPlot(
+                    graphicTitles.get(k),
+                    graphicTitles.get(k).split(":")[1].split("\\+")[0].trim(),
+                    graphicTitles.get(k).split(":")[1].split("\\+")[1].trim(),
+                    dataset);
+
+            XYPlot plot = (XYPlot)chart.getPlot();
+            plot.setBackgroundPaint(new Color(230, 230, 230));
+            XYItemRenderer renderer;
+            renderer = plot.getRenderer();
+
+            for (int i=0; i<numberOfTeams; i++){
+                renderer.setSeriesShape(i, new Ellipse2D.Double(-5, -5, 10, 10));
+            }
+
+            XYItemLabelGenerator generator =
+                    new StandardXYItemLabelGenerator("{0}");
+            renderer.setBaseItemLabelGenerator(generator);
+            renderer.setBaseItemLabelsVisible(true);
+
+            chart.setBackgroundPaint(Color.white);
+            chart.getLegend().setVisible(false);
+            ChartPanel panel = new ChartPanel(chart);
+            panel.setBorder(BorderFactory.createLineBorder(new Color(50,50,50), 1));
+            result.add(panel);
+        }
+
+
+
+        return result;
+    }
+
+    private XYDataset createDataset(int index, double[][][] data, ArrayList<String> teamsList) {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+
+        for (int i=0; i<teamsList.size(); i++){
+            XYSeries series = new XYSeries(teamsList.get(i));
+            series.add(data[index][i][0], data[index][i][1]);
+            dataset.addSeries(series);
+        }
+
+        return dataset;
     }
 
 }

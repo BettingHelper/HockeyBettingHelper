@@ -21,6 +21,7 @@ public class PanelSettings extends JPanel{
     boolean windowsOnTop;
     boolean flagGraphics;
     boolean flagTrendsHA;
+    boolean flagBubbleChartsHA;
     final String path = "database/";
 
     public PanelSettings(){
@@ -316,6 +317,27 @@ public class PanelSettings extends JPanel{
         panelTrendsSettings.add(trendsAll);
         otherSettings.add(panelTrendsSettings);
 
+        JPanel panelBubblesChartSettings = new JPanel();
+        panelBubblesChartSettings.setBorder(BorderFactory.createTitledBorder("Перекрестные графики"));
+
+        JRadioButton bubbleChartsHA = new JRadioButton("Дом - выезд");
+        JRadioButton bubbleChartsAll = new JRadioButton("Все игры - все игры");
+
+        if (settings.bubbleChartsHA){
+            bubbleChartsHA.setSelected(true);
+            flagBubbleChartsHA = true;
+        }
+        else{
+            bubbleChartsAll.setSelected(true);
+            flagBubbleChartsHA = false;
+        }
+
+        final ButtonGroup groupBubbleCharts = new ButtonGroup();
+        groupBubbleCharts.add(bubbleChartsHA);
+        groupBubbleCharts.add(bubbleChartsAll);
+        panelBubblesChartSettings.add(bubbleChartsHA);
+        panelBubblesChartSettings.add(bubbleChartsAll);
+        otherSettings.add(panelBubblesChartSettings);
 
 
         secondPanel.add(otherSettings, BorderLayout.EAST);
@@ -384,6 +406,19 @@ public class PanelSettings extends JPanel{
             }
         });
 
+        bubbleChartsHA.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                flagBubbleChartsHA = true;
+            }
+        });
+        bubbleChartsAll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                flagBubbleChartsHA = false;
+            }
+        });
+
         buttonApply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -415,6 +450,7 @@ public class PanelSettings extends JPanel{
                 arrayList.add(flagGraphics);
                 arrayList.add(flagTrendsHA);
                 arrayList.add(useColors.isSelected());
+                arrayList.add(flagBubbleChartsHA);
                 //arrayList.add(dispMinMax.isSelected());
                 settings = new Settings(arrayList, Main.getFrames()[0].getWidth(), Main.getFrames()[0].getHeight(), slider.getValue(), windowsOnTop.isSelected(), formS, settings.getIp(), timeChooser.getSelectedIndex());
                 settings.pushSettingsToFile();

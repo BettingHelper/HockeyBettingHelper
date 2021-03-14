@@ -26,7 +26,7 @@ import java.util.zip.ZipOutputStream;
         "showShotsOnTarget1per", "showShotsOnTarget2per", "showShotsOnTarget3per", "showMissedShots",
         "showBlockedShots", "showFaceoffs", "showHits", "showPenMinutes", "showNumberOf2MinutesPen", "showTotal",
         "windowResolution", "showSoTOpponents", "showPenOpponents", "trendPercent", "form", "windowsOnTop", "showGraphics",
-        "trendsHA", "ip", "localTime", "useColors"/*, "dispMinMax"*/
+        "trendsHA", "ip", "localTime", "useColors"/*, "dispMinMax"*/ , "bubbleChartsHA"
 })
 
 public class Settings {
@@ -62,6 +62,7 @@ public class Settings {
     public boolean showGraphics;
     public int localTime;
     public boolean trendsHA;
+    public boolean bubbleChartsHA;
     public boolean useColors;
 //    public boolean dispMinMax;
 
@@ -101,6 +102,7 @@ public class Settings {
         this.ip = ip;
         this.localTime = localTime;
         this.useColors = arrayList.get(25);
+        this.bubbleChartsHA = arrayList.get(26);
 //        this.dispMinMax = arrayList.get(26);
     }
 
@@ -132,6 +134,7 @@ public class Settings {
         result.add(this.showGraphics);
         result.add(this.trendsHA);
         result.add(this.useColors);
+        result.add(this.bubbleChartsHA);
         //result.add(this.dispMinMax);
 
         return result;
