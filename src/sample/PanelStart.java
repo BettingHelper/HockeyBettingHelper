@@ -225,28 +225,28 @@ public class PanelStart extends JPanel {
         sitePanel.add(siteLabel);
         panelResources.add(sitePanel);
 
-        JPanel instPanel = new JPanel(new BorderLayout());
-        File fileInst = new File("images/instagram.png");
+        JPanel telegramPanel = new JPanel(new BorderLayout());
+        File fileTelegram = new File("images/telegram.png");
         bimg = null;
         try {
-            bimg = ImageIO.read(fileInst);
+            bimg = ImageIO.read(fileTelegram);
         } catch (IOException e) {
             e.printStackTrace();
         }
         scaled = bimg.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-        JLabel instImage = new JLabel(new ImageIcon(scaled));
-        instPanel.add(instImage, BorderLayout.WEST);
-        String inst = "<html> (<a href=\"instagram.com/_bettinghelper_\">instagram.com/_bettinghelper_</a>) </html>";
+        JLabel telegramImage = new JLabel(new ImageIcon(scaled));
+        telegramPanel.add(telegramImage, BorderLayout.WEST);
+        String telegram = "<html> (<a href=\"t.me/HockeyBettingHelper\">https://t.me/HockeyBettingHelper</a>) </html>";
 
-        JLabel instLabel = new JLabel(inst);
-        instLabel.setFont(fontTezis);
-        instLabel.addMouseListener(new MouseListener() {
+        JLabel telegramLabel = new JLabel(telegram);
+        telegramLabel.setFont(fontTezis);
+        telegramLabel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Desktop desktop = java.awt.Desktop.getDesktop();
                 URI uri = null;
                 try {
-                    uri = new URI("https://instagram.com/_bettinghelper_");
+                    uri = new URI("https://t.me/HockeyBettingHelper");
                 } catch (URISyntaxException e1) {
                     e1.printStackTrace();
                 }
@@ -256,25 +256,21 @@ public class PanelStart extends JPanel {
                     e1.printStackTrace();
                 }
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
             }
         });
-        instPanel.add(instLabel);
-        panelResources.add(instPanel);
+        telegramPanel.add(telegramLabel);
+        panelResources.add(telegramPanel);
 
         JPanel legalPanel = new JPanel(new BorderLayout());
         File fileLegal = new File("images/legalbet.png");

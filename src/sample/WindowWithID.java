@@ -94,7 +94,7 @@ public class WindowWithID extends JFrame {
         scaled = bimg.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
         JLabel telegramImage = new JLabel(new ImageIcon(scaled));
         telegramPanel.add(telegramImage, BorderLayout.WEST);
-        String telegram = "<html> (<a href=\"https://tlgg.ru/mgomorov\">Написать в Telegram</a>) </html>";
+        String telegram = "<html> (<a href=\"https://t.me/mgomorov\">Написать в Telegram</a>) </html>";
 
         JLabel telegramLabel = new JLabel(telegram);
         telegramLabel.setFont(fontTezis);
@@ -204,10 +204,10 @@ public class WindowWithID extends JFrame {
                 window.add(label);
 
                 JTextArea jtf = new JTextArea(
-                    "Реквизиты для оплаты:\n" +
-                    "1) Сбербанк: 4817 7600 1667 8447 (Михаил Романович Г.)\n" +
-                    "2) Яндекс.Деньги: 410017025122373\n" +
-                    "3) Киви: 8-916-477-81-33"
+                        "Реквизиты для оплаты:\n" +
+                                "1) Сбербанк: 4817 7600 1667 8447 (Михаил Романович Г.)\n" +
+                                "2) Яндекс.Деньги: 410017025122373\n" +
+                                "3) Киви: 8-916-477-81-33"
                 );
                 jtf.setBackground(new Color(238, 238, 238));
                 jtf.setFont(font);
