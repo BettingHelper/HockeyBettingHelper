@@ -37,6 +37,12 @@ public class TrendMaker {
     double itbHITS = 12.5;
 
 
+    double tm2MP = 6.5;
+    double tb2MP = 5.5;
+    double itm2MP = 2.5;
+    double itb2MP = 3.5;
+
+
 
 
 
@@ -124,6 +130,14 @@ public class TrendMaker {
                 this.listOfTrends.add("СИЛ.ПР: ИТМ команды");
                 this.listOfTrends.add("СИЛ.ПР: ИТБ соперника");
                 this.listOfTrends.add("СИЛ.ПР: ИТМ соперника");
+                this.listOfTrends.add("2мин.уд.: ТМ");
+                this.listOfTrends.add("2мин.уд.: ТБ");
+                this.listOfTrends.add("2мин.уд.: Фора команды");
+                this.listOfTrends.add("2мин.уд.: Фора соперника");
+                this.listOfTrends.add("2мин.уд.: ИТБ команды");
+                this.listOfTrends.add("2мин.уд.: ИТМ команды");
+                this.listOfTrends.add("2мин.уд.: ИТБ соперника");
+                this.listOfTrends.add("2мин.уд.: ИТМ соперника");
                 //this.listOfTrends.add("ШТР.ВР 1пер: Фора команды");
                 //this.listOfTrends.add("ШТР.ВР 1пер: Фора соперника");
                 break;
@@ -231,6 +245,17 @@ public class TrendMaker {
                 break;
             }
 
+            case "2 мин. удаления":{
+                this.listOfTrends.add("2мин.уд.: ТМ");
+                this.listOfTrends.add("2мин.уд.: ТБ");
+                this.listOfTrends.add("2мин.уд.: Фора команды");
+                this.listOfTrends.add("2мин.уд.: Фора соперника");
+                this.listOfTrends.add("2мин.уд.: ИТБ команды");
+                this.listOfTrends.add("2мин.уд.: ИТМ команды");
+                this.listOfTrends.add("2мин.уд.: ИТБ соперника");
+                this.listOfTrends.add("2мин.уд.: ИТМ соперника");
+                break;
+            }
 
         }
         switch (league){
@@ -2109,7 +2134,6 @@ public class TrendMaker {
                     }
                     break;
                 }
-                //***************************
                 case "СИЛ.ПР: ТМ":{
                     boolean flag = false;
                     double resultTotal = 99;
@@ -2383,6 +2407,282 @@ public class TrendMaker {
                     }
                     break;
                 }
+
+                case "2мин.уд.: ТМ":{
+                    boolean flag = false;
+                    double resultTotal = 99;
+                    int resultSuccess = 99;
+                    int resultPercent = 200;
+                    boolean resultFlag = false;
+
+                    while (!flag){
+                        success = 0;
+                        for (int j=0; j<selector.listOfMatches.size(); j++){
+                            if (selector.listOfMatches.get(j).home2MinPenalties + selector.listOfMatches.get(j).away2MinPenalties < tm2MP)
+                                success++;
+                        }
+                        percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
+                        if (percent < percentBorder){
+                            flag = true;
+                        } else {
+                            resultFlag = true;
+                            resultTotal = tm2MP;
+                            resultSuccess = success;
+                            resultPercent = percent;
+                        }
+                        tm2MP -= 1;
+                    }
+                    if (resultFlag){
+                        resultList.add("2МИН.УД.: ТМ (" + resultTotal + ") " + resultSuccess + " матчей из " + selector.listOfMatches.size() + " (" + resultPercent + "%)");
+                    }
+
+                    break;
+                }
+                case "2мин.уд.: ТБ":{
+                    boolean flag = false;
+                    double resultTotal = 99;
+                    int resultSuccess = 99;
+                    int resultPercent = 200;
+                    boolean resultFlag = false;
+
+                    while (!flag){
+                        success = 0;
+                        for (int j=0; j<selector.listOfMatches.size(); j++){
+                            if (selector.listOfMatches.get(j).home2MinPenalties + selector.listOfMatches.get(j).away2MinPenalties > tb2MP)
+                                success++;
+                        }
+                        percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
+                        if (percent < percentBorder){
+                            flag = true;
+                        } else {
+                            resultFlag = true;
+                            resultTotal = tb2MP;
+                            resultSuccess = success;
+                            resultPercent = percent;
+                        }
+                        tb2MP += 1;
+                    }
+                    if (resultFlag){
+                        resultList.add("2МИН.УД.: ТБ (" + resultTotal + ") " + resultSuccess + " матчей из " + selector.listOfMatches.size() + " (" + resultPercent + "%)");
+                    }
+
+                    break;
+                }
+                case "2мин.уд.: Фора команды":{
+                    double fora = 0.5;
+                    boolean flag = false;
+                    double resultFora = 99;
+                    int resultSuccess = 99;
+                    int resultPercent = 200;
+                    boolean resultFlag = false;
+
+                    while (!flag){
+                        success = 0;
+                        for (int j=0; j<selector.listOfMatches.size(); j++){
+                            if (selector.listOfMatches.get(j).homeTeam.equals(team)){
+                                if (selector.listOfMatches.get(j).home2MinPenalties - selector.listOfMatches.get(j).away2MinPenalties + fora > 0)
+                                    success++;
+                            } else{
+                                if (selector.listOfMatches.get(j).away2MinPenalties - selector.listOfMatches.get(j).home2MinPenalties + fora > 0)
+                                    success++;
+                            }
+                        }
+                        percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
+                        if (percent < percentBorder){
+                            flag = true;
+                        } else {
+                            resultFlag = true;
+                            resultFora = fora;
+                            resultSuccess = success;
+                            resultPercent = percent;
+                        }
+                        fora -= 1;
+                    }
+                    if (resultFlag){
+                        String str = String.valueOf(resultFora);
+                        if (resultFora > 0)
+                            str = "+" + str;
+                        resultList.add("Фора (" + str + ") " + team + " по 2МИН.УД.: " + resultSuccess + " матчей из " + selector.listOfMatches.size() + " (" + resultPercent + "%)");
+                    }
+                    break;
+                }
+                case "2мин.уд.: Фора соперника":{
+                    double fora = 0.5;
+                    boolean flag = false;
+                    double resultFora = 99;
+                    int resultSuccess = 99;
+                    int resultPercent = 200;
+                    boolean resultFlag = false;
+
+                    while (!flag){
+                        success = 0;
+                        for (int j=0; j<selector.listOfMatches.size(); j++){
+                            if (selector.listOfMatches.get(j).homeTeam.equals(team)){
+                                if (selector.listOfMatches.get(j).away2MinPenalties - selector.listOfMatches.get(j).home2MinPenalties + fora > 0)
+                                    success++;
+                            } else{
+                                if (selector.listOfMatches.get(j).home2MinPenalties - selector.listOfMatches.get(j).away2MinPenalties + fora > 0)
+                                    success++;
+                            }
+                        }
+                        percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
+                        if (percent < percentBorder){
+                            flag = true;
+                        } else {
+                            resultFlag = true;
+                            resultFora = fora;
+                            resultSuccess = success;
+                            resultPercent = percent;
+                        }
+                        fora -= 1;
+                    }
+                    if (resultFlag){
+                        String str = String.valueOf(resultFora);
+                        if (resultFora > 0)
+                            str = "+" + str;
+                        resultList.add("Фора (" + str + ") соперника " + team + " по 2МИН.УД.: " + resultSuccess + " матчей из " + selector.listOfMatches.size() + " (" + resultPercent + "%)");
+                    }
+                    break;
+                }
+
+                case "2мин.уд.: ИТБ команды":{
+                    boolean flag = false;
+                    double resultTotal = 99;
+                    int resultSuccess = 99;
+                    int resultPercent = 200;
+                    boolean resultFlag = false;
+
+                    while (!flag){
+                        success = 0;
+                        for (int j=0; j<selector.listOfMatches.size(); j++){
+                            if (selector.listOfMatches.get(j).homeTeam.equals(team)){
+                                if (selector.listOfMatches.get(j).home2MinPenalties > itb2MP)
+                                    success++;
+                            } else{
+                                if (selector.listOfMatches.get(j).away2MinPenalties > itb2MP)
+                                    success++;
+                            }
+                        }
+                        percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
+                        if (percent < percentBorder){
+                            flag = true;
+                        } else {
+                            resultFlag = true;
+                            resultTotal = itb2MP;
+                            resultSuccess = success;
+                            resultPercent = percent;
+                        }
+                        itb2MP += 1;
+                    }
+                    if (resultFlag){
+                        resultList.add(team + ": ИТБ (" + resultTotal + ") по 2МИН.УД.: " + resultSuccess + " матчей из " + selector.listOfMatches.size() + " (" + resultPercent + "%)");
+                    }
+                    break;
+                }
+                case "2мин.уд.: ИТМ команды":{
+                    boolean flag = false;
+                    double resultTotal = 99;
+                    int resultSuccess = 99;
+                    int resultPercent = 200;
+                    boolean resultFlag = false;
+
+                    while (!flag){
+                        success = 0;
+                        for (int j=0; j<selector.listOfMatches.size(); j++){
+                            if (selector.listOfMatches.get(j).homeTeam.equals(team)){
+                                if (selector.listOfMatches.get(j).home2MinPenalties < itm2MP)
+                                    success++;
+                            } else{
+                                if (selector.listOfMatches.get(j).away2MinPenalties < itm2MP)
+                                    success++;
+                            }
+                        }
+                        percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
+                        if (percent < percentBorder){
+                            flag = true;
+                        } else {
+                            resultFlag = true;
+                            resultTotal = itm2MP;
+                            resultSuccess = success;
+                            resultPercent = percent;
+                        }
+                        itm2MP -= 1;
+                    }
+                    if (resultFlag){
+                        resultList.add(team + ": ИТМ (" + resultTotal + ") по 2МИН.УД.: " + resultSuccess + " матчей из " + selector.listOfMatches.size() + " (" + resultPercent + "%)");
+                    }
+                    break;
+                }
+                case "2мин.уд.: ИТБ соперника":{
+                    boolean flag = false;
+                    double resultTotal = 99;
+                    int resultSuccess = 99;
+                    int resultPercent = 200;
+                    boolean resultFlag = false;
+
+                    while (!flag){
+                        success = 0;
+                        for (int j=0; j<selector.listOfMatches.size(); j++){
+                            if (selector.listOfMatches.get(j).homeTeam.equals(team)){
+                                if (selector.listOfMatches.get(j).away2MinPenalties > itb2MP)
+                                    success++;
+                            } else{
+                                if (selector.listOfMatches.get(j).home2MinPenalties > itb2MP)
+                                    success++;
+                            }
+                        }
+                        percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
+                        if (percent < percentBorder){
+                            flag = true;
+                        } else {
+                            resultFlag = true;
+                            resultTotal = itb2MP;
+                            resultSuccess = success;
+                            resultPercent = percent;
+                        }
+                        itb2MP += 1;
+                    }
+                    if (resultFlag){
+                        resultList.add("Соперник " + team + ": ИТБ (" + resultTotal + ") по 2МИН.УД.: " + resultSuccess + " матчей из " + selector.listOfMatches.size() + " (" + resultPercent + "%)");
+                    }
+                    break;
+                }
+                case "2мин.уд.: ИТМ соперника":{
+                    boolean flag = false;
+                    double resultTotal = 99;
+                    int resultSuccess = 99;
+                    int resultPercent = 200;
+                    boolean resultFlag = false;
+
+                    while (!flag){
+                        success = 0;
+                        for (int j=0; j<selector.listOfMatches.size(); j++){
+                            if (selector.listOfMatches.get(j).homeTeam.equals(team)){
+                                if (selector.listOfMatches.get(j).away2MinPenalties < itm2MP)
+                                    success++;
+                            } else{
+                                if (selector.listOfMatches.get(j).home2MinPenalties < itm2MP)
+                                    success++;
+                            }
+                        }
+                        percent = (int) MyMath.round(100 * (double) success / selector.listOfMatches.size() , 0);
+                        if (percent < percentBorder){
+                            flag = true;
+                        } else {
+                            resultFlag = true;
+                            resultTotal = itm2MP;
+                            resultSuccess = success;
+                            resultPercent = percent;
+                        }
+                        itm2MP -= 1;
+                    }
+                    if (resultFlag){
+                        resultList.add("Соперник " + team + ": ИТМ (" + resultTotal + ") по 2МИН.УД.: " + resultSuccess + " матчей из " + selector.listOfMatches.size() + " (" + resultPercent + "%)");
+                    }
+                    break;
+                }
+
+
             }
         }
     }
@@ -2412,6 +2712,9 @@ public class TrendMaker {
         }
         if (text.contains("СИЛ.ПР")){
             return new Color(64, 173, 84);
+        }
+        if (text.contains("2МИН.УД.")){
+            return new Color(219, 78, 145);
         }
 
         return new Color(200, 200, 200);

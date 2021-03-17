@@ -65,7 +65,9 @@ public class Main extends JFrame { //Наследуя от JFrame, мы полу
                 setBounds(0, 0, width, height); //отступы и размеры окна
                 super.setMinimumSize(new Dimension(1280, 720));
                 String tabs[] = {"О программе", "Сравнение команд", "Статистика команды", "Противостояние", "Броски в створ ворот",
-                        "Штраф","Таблицы по лиге", "Продвинутая статистика", "Тренды", "Настройки", "Матч-центр", "До-после"};  /*Настройки и редактирование базы*/
+                        "Штраф","Таблицы по лиге", "Продвинутая статистика", "Тренды", "Настройки", "Матч-центр", "До-после",
+                        "Калькулятор"
+                };  /*Настройки и редактирование базы*/
                 JTabbedPane jtp = new JTabbedPane(JTabbedPane.TOP,
                         JTabbedPane.SCROLL_TAB_LAYOUT);
                 jtp.setUI(new javax.swing.plaf.basic.BasicTabbedPaneUI() {
@@ -108,10 +110,11 @@ public class Main extends JFrame { //Наследуя от JFrame, мы полу
                 PanelOneTeamStats panelOneTeamStats = new PanelOneTeamStats();
                 PanelTablesByLeague panelTablesByLeague = new PanelTablesByLeague();
                 PanelAdvancedStatistics panelAdvancedStatistics = new PanelAdvancedStatistics();
+                PanelCalculator panelCalculator = new PanelCalculator();
                 PanelTrends panelTrends = new PanelTrends();
                 PanelBeforeAfter panelBeforeAfter = new PanelBeforeAfter();
                 PanelMatchCenter panelMatchCenter = new PanelMatchCenter(panelMatching, panelOneTeamStats, panelConfrontation,
-                        panelTablesByLeague, panelTrends, panelShotsOnTarget, panelPenalties, panelAdvancedStatistics);
+                        panelTablesByLeague, panelTrends, panelShotsOnTarget, panelPenalties, panelAdvancedStatistics, panelCalculator);
 
                 jtp.addTab(tabs[0], panelStart);
                 add(jtp);
@@ -130,6 +133,8 @@ public class Main extends JFrame { //Наследуя от JFrame, мы полу
                 jtp.addTab(tabs[6], panelTablesByLeague);
                 add(jtp);
                 jtp.addTab(tabs[7], panelAdvancedStatistics);
+                add(jtp);
+                jtp.addTab(tabs[12], panelCalculator);
                 add(jtp);
                 jtp.addTab(tabs[8], panelTrends);
                 add(jtp);

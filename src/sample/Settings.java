@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -1058,6 +1059,10 @@ public class Settings {
             res = currentYear*10000 + currentMonth*100 + currentDay;
         }
         return  res;
+    }
+
+    public static boolean isTopLeague(String leagueName){
+        return ( leagueName.contains("KHL") || leagueName.contains("NHL"));
     }
 
     public static int getPreviousDayCode(int todayCode){

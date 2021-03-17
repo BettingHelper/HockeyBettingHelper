@@ -165,6 +165,41 @@ public class League {
         return result;
     }
 
+    public double getParameterValue(String teamName, String allHomeAway, int indexOfParameter, int selfOrOpp){
+        double result = 0;
+
+
+        if (allHomeAway.contains("Общее")){
+            for (int i=0; i<overallStatsTable.size(); i++){
+                String teamNameLocal = Team.getShortName(overallStatsTable.get(i).split("\\*")[0]);
+                if (teamName.contains(teamNameLocal)){
+                    return (Double.parseDouble(overallStatsTable.get(i).split("\\*")[indexOfParameter].split("_")[selfOrOpp])
+                            / Double.parseDouble(overallStatsTable.get(i).split("\\*")[1]) );
+                }
+            }
+        }
+        if (allHomeAway.contains("Дом")){
+            for (int i=0; i<homeStatsTable.size(); i++){
+                String teamNameLocal = Team.getShortName(homeStatsTable.get(i).split("\\*")[0]);
+                if (teamName.contains(teamNameLocal)){
+                    return (Double.parseDouble(homeStatsTable.get(i).split("\\*")[indexOfParameter].split("_")[selfOrOpp])
+                            / Double.parseDouble(homeStatsTable.get(i).split("\\*")[1]) );
+                }
+            }
+        }
+        if (allHomeAway.contains("Выезд")){
+            for (int i=0; i<awayStatsTable.size(); i++){
+                String teamNameLocal = Team.getShortName(awayStatsTable.get(i).split("\\*")[0]);
+                if (teamName.contains(teamNameLocal)){
+                    return (Double.parseDouble(awayStatsTable.get(i).split("\\*")[indexOfParameter].split("_")[selfOrOpp])
+                            / Double.parseDouble(awayStatsTable.get(i).split("\\*")[1]) );
+                }
+            }
+        }
+
+        return result;
+    }
+
     public void resetTables(String season, String leagueName, String lastOrFull, JProgressBar jpb){
         this.overallStatsTable = new ArrayList<>();
         this.homeStatsTable = new ArrayList<>();

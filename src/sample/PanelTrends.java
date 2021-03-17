@@ -57,7 +57,7 @@ public class PanelTrends extends JPanel{
         leagueName = listOfLeagues[0];
 
 
-        String[] params = {"Голы", "Броски в створ", "Штрафное время", "Вбрасывания", "Блокированные броски", "Силовые приемы"};
+        String[] params = {"Голы", "Броски в створ", "Штрафное время", "2 мин. удаления", "Вбрасывания", "Блокированные броски", "Силовые приемы"};
         final JComboBox<String> paramChooser = new JComboBox<>(params);
         headersPanel.add(paramChooser);
         parameter = params[0];

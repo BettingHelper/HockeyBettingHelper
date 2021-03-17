@@ -9,6 +9,7 @@ public class FiltersThread extends Thread{
     PanelShotsOnTarget panelShotsOnTarget;
     PanelPenalties panelPenalties;
     PanelAdvancedStatistics panelAdvancedStatistics;
+    PanelCalculator panelCalculator;
     String league;
     String homeTeam;
     String awayTeam;
@@ -16,7 +17,8 @@ public class FiltersThread extends Thread{
 
     public FiltersThread(PanelMatching panelMatching, PanelOneTeamStats panelOneTeamStats, PanelConfrontation panelConfrontation,
                          PanelTablesByLeague panelTablesByLeague, PanelTrends panelTrends, PanelShotsOnTarget panelShotsOnTarget,
-                         PanelPenalties panelPenalties, PanelAdvancedStatistics panelAdvancedStatistics, String league, String homeTeam, String awayTeam){
+                         PanelPenalties panelPenalties, PanelAdvancedStatistics panelAdvancedStatistics, PanelCalculator panelCalculator,
+                         String league, String homeTeam, String awayTeam){
 
         this.panelMatching = panelMatching;
         this.panelOneTeamStats = panelOneTeamStats;
@@ -26,6 +28,7 @@ public class FiltersThread extends Thread{
         this.panelShotsOnTarget = panelShotsOnTarget;
         this.panelPenalties = panelPenalties;
         this.panelAdvancedStatistics = panelAdvancedStatistics;
+        this.panelCalculator = panelCalculator;
         this.league = league;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -42,5 +45,6 @@ public class FiltersThread extends Thread{
         panelTrends.setFilters(league);
         panelPenalties.setFilters(league);
         panelAdvancedStatistics.setFilters(league, homeTeam, awayTeam);
+        panelCalculator.setFilters(league, homeTeam, awayTeam);
     }
 }

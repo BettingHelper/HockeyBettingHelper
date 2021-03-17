@@ -28,9 +28,11 @@ public class PanelMatchCenter extends JPanel{
     PanelShotsOnTarget panelShotsOnTarget;
     PanelPenalties panelPenalties;
     PanelAdvancedStatistics panelAdvancedStatistics;
+    PanelCalculator panelCalculator;
 
     public PanelMatchCenter(PanelMatching panelMatching, PanelOneTeamStats panelOneTeamStats, PanelConfrontation panelConfrontation, PanelTablesByLeague panelTablesByLeague,
-                            PanelTrends panelTrends, PanelShotsOnTarget panelShotsOnTarget, PanelPenalties panelPenalties, PanelAdvancedStatistics panelAdvancedStatistics){
+                            PanelTrends panelTrends, PanelShotsOnTarget panelShotsOnTarget, PanelPenalties panelPenalties, PanelAdvancedStatistics panelAdvancedStatistics,
+                            PanelCalculator panelCalculator) {
         this.setLayout(new BorderLayout());
 
         this.panelMatching = panelMatching;
@@ -41,6 +43,7 @@ public class PanelMatchCenter extends JPanel{
         this.panelShotsOnTarget = panelShotsOnTarget;
         this.panelPenalties = panelPenalties;
         this.panelAdvancedStatistics = panelAdvancedStatistics;
+        this.panelCalculator = panelCalculator;
 
         Settings settings = Settings.getSettingsFromFile();
 
@@ -220,7 +223,7 @@ public class PanelMatchCenter extends JPanel{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         FiltersThread filtersThread = new FiltersThread(panelMatching, panelOneTeamStats, panelConfrontation, panelTablesByLeague,
-                                panelTrends, panelShotsOnTarget, panelPenalties, panelAdvancedStatistics, currentLeague, homeTeam, awayTeam);
+                                panelTrends, panelShotsOnTarget, panelPenalties, panelAdvancedStatistics, panelCalculator, currentLeague, homeTeam, awayTeam);
                         filtersThread.start();
 
                     }
