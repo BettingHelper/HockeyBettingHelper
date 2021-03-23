@@ -908,14 +908,7 @@ public class PanelBeforeAfter extends JPanel{
                                 break;
                             }
                         }
-                        int resHeight;
-                        if (settings.showGraphics){
-                            resHeight = containerHeight + indexOfFoundGraphic*graphic.graphicHeight;
-                        } else {
-                            heightOfTable = panelG.getHeight() / graphic.graphicTitles.size();
-                            resHeight = containerHeight + indexOfFoundGraphic*heightOfTable;
-                        }
-
+                        int resHeight =(int) (containerHeight + (double) indexOfFoundGraphic / (double) graphic.graphicTitles.size() * (scrollPane.getVerticalScrollBar().getMaximum() - containerHeight));
                         scrollPane.getVerticalScrollBar().setValue(resHeight);
                     }
 
@@ -929,6 +922,20 @@ public class PanelBeforeAfter extends JPanel{
                     System.out.println("Was change...");
                 }
             };
+
+            searchTextField.getDocument().addDocumentListener(dl);
+
+            searchTextField.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    searchTextField.selectAll();
+                }
+                @Override
+                public void focusLost(FocusEvent e) {
+
+                }
+            });
+
         } else {
             JPanel container = new JPanel(new BorderLayout());
 

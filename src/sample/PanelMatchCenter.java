@@ -51,7 +51,7 @@ public class PanelMatchCenter extends JPanel{
         panelHeader = new JPanel(new BorderLayout());
 
         buttonLeft = new JButton(new ImageIcon("images/left-arrow.png"));
-        buttonLeft.setEnabled(false);
+//        buttonLeft.setEnabled(false);
         panelHeader.add(buttonLeft, BorderLayout.WEST);
 
         LocalDateTime ldt = LocalDateTime.now(ZoneId.of("GMT"));
@@ -103,18 +103,12 @@ public class PanelMatchCenter extends JPanel{
                 String year = String.valueOf(newDayCode).substring(0,4);
 
                 File file = Settings.downloadDayFile(Settings.getNumberOfAccount(), "H_" + Settings.getPreviousDayCode(newDayCode) + ".txt");
-                if (!file.exists() || file.length()==0)
-                    buttonLeft.setEnabled(false);
-                else
-                    buttonLeft.setEnabled(true);
+                buttonLeft.setEnabled(file.exists() && file.length() != 0);
                 labelDate.setText(day + "." + month + "." + year);
                 dayCode = Integer.parseInt(year)*10000 + Integer.parseInt(month)*100 + Integer.parseInt(day);
 
                 file = Settings.downloadDayFile(Settings.getNumberOfAccount(), "H_" + Settings.getNextDayCode(newDayCode) + ".txt");
-                if (!file.exists() || file.length()==0)
-                    buttonRight.setEnabled(false);
-                else
-                    buttonRight.setEnabled(true);
+                buttonRight.setEnabled(file.exists() && file.length() != 0);
 
                 fillData(dayCode, hourDifference);
 
@@ -129,20 +123,11 @@ public class PanelMatchCenter extends JPanel{
                 String month = String.valueOf(newDayCode).substring(4,6);
                 String year = String.valueOf(newDayCode).substring(0,4);
                 File file = Settings.downloadDayFile(Settings.getNumberOfAccount(), "H_" + Settings.getNextDayCode(newDayCode) + ".txt");
-                if (!file.exists() || file.length()==0){
-                    buttonRight.setEnabled(false);
-                } else{
-                    buttonRight.setEnabled(true);
-                }
+                buttonRight.setEnabled(file.exists() && file.length() != 0);
                 labelDate.setText(day + "." + month + "." + year);
                 dayCode = Integer.parseInt(year)*10000 + Integer.parseInt(month)*100 + Integer.parseInt(day);
                 file = Settings.downloadDayFile(Settings.getNumberOfAccount(), "H_" + Settings.getPreviousDayCode(newDayCode) + ".txt");
-                if (!file.exists() || file.length()==0){
-                    buttonLeft.setEnabled(false);
-                }
-                else{
-                    buttonLeft.setEnabled(true);
-                }
+                buttonLeft.setEnabled(file.exists() && file.length() != 0);
                 fillData(dayCode, hourDifference);
 
             }

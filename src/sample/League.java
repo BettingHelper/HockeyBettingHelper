@@ -128,6 +128,27 @@ public class League {
         return null;
     }
 
+    public static String[] getListOfTeams(String season, String leagueName){
+        String resultS = "";
+        String fileName = "database/" + season + "/leagues/" + leagueName + ".txt";
+        try {
+            File fileDir = new File(fileName);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(fileDir), "UTF-8"));
+            String str;
+            while (((str = in.readLine()) != null)) {
+                resultS += str + "\n";
+            }
+            in.close();
+        } catch (IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+        return resultS.split("\n");
+    }
+
     public static String getPositionInLeague(String teamName, ArrayList<String> tournamentTable){
         String result;
         int localIndex = 0;
@@ -206,10 +227,10 @@ public class League {
         this.awayStatsTable = new ArrayList<>();
         jpb.setValue(0);
 
-        String[] listOfTeams = new File("database/" + season + "/" + leagueName + "/Teams").list();
+        String[] listOfTeams = League.getListOfTeams(season, leagueName);
 
         for (int i=0; i<listOfTeams.length; i++){
-            String teamName = listOfTeams[i].replaceAll(".xml","");
+            String teamName = listOfTeams[i];
 
             Selector totalSelector = new Selector();
             totalSelector.getListOfMatches(leagueName, teamName, "Все матчи", season, lastOrFull);

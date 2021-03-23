@@ -821,14 +821,7 @@ public class PanelAdvancedStatistics extends JPanel{
                                     break;
                                 }
                             }
-                            int resHeight;
-                            if (settings.showGraphics){
-                                resHeight = containerHeight + indexOfFoundGraphic*graphic.graphicHeight;
-                            } else {
-                                heightOfTable = panelG.getHeight() / graphic.graphicTitles.size();
-                                resHeight = containerHeight + indexOfFoundGraphic*heightOfTable;
-                            }
-
+                            int resHeight =(int) (containerHeight + (double) indexOfFoundGraphic / (double) graphic.graphicTitles.size() * (scrollPane.getVerticalScrollBar().getMaximum() - containerHeight));
                             scrollPane.getVerticalScrollBar().setValue(resHeight);
                         }
 

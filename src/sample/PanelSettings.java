@@ -25,11 +25,10 @@ public class PanelSettings extends JPanel{
     final String path = "database/";
 
     public PanelSettings(){
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
 
+        JScrollPane sp;
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setLocation(0,0);
-        mainPanel.setSize(700, 620);
         mainPanel.setBorder(BorderFactory.createTitledBorder(""));
 
         JPanel secondPanel = new JPanel(new BorderLayout());
@@ -40,150 +39,79 @@ public class PanelSettings extends JPanel{
         JPanel selectGraphics = new JPanel();
         selectGraphics.setBorder(
                 BorderFactory.createTitledBorder("Отображение графиков"));
-        selectGraphics.setLocation(5, 5);
-        selectGraphics.setSize(280, 560);
-        selectGraphics.setLayout(null);
-        int otstup = 20;
+        selectGraphics.setLayout(new BorderLayout());
+
+        JPanel allMatchPanel = new JPanel(new VerticalLayout());
 
         Font font = new Font("Arial", Font.BOLD, 15);
         final JCheckBox goals  = new JCheckBox("Голы в основное время", settings.showGoals);
-        goals.setLocation(20, otstup);
-        otstup +=20;
-        goals.setSize(200, 20);
-        selectGraphics.add(goals);
+        allMatchPanel.add(goals);
 
         final JCheckBox goalsOT = new JCheckBox("Голы с учетом ОТ и буллитов", settings.showGoalsOT);
-        goalsOT.setLocation(20, otstup);
-        otstup +=20;
-        goalsOT.setSize(200, 20);
-        selectGraphics.add(goalsOT);
+        allMatchPanel.add(goalsOT);
 
         final JCheckBox realization = new JCheckBox("Реализация бросков", settings.showRealization);
-        realization.setLocation(20, otstup);
-        otstup +=20;
-        realization.setSize(200, 20);
-        selectGraphics.add(realization);
+        allMatchPanel.add(realization);
 
         final JCheckBox powerPlay = new JCheckBox("Реализация большинства", settings.showPowerPlay);
-        powerPlay.setLocation(20, otstup);
-        otstup +=20;
-        powerPlay.setSize(200, 20);
-        selectGraphics.add(powerPlay);
+        allMatchPanel.add(powerPlay);
 
         final JCheckBox shortHanded = new JCheckBox("Меньшинство", settings.showShortHanded);
-        shortHanded.setLocation(20, otstup);
-        otstup +=20;
-        shortHanded.setSize(200, 20);
-        selectGraphics.add(shortHanded);
+        allMatchPanel.add(shortHanded);
 
         final JCheckBox timeInAttack  = new JCheckBox("Время в атаке", settings.showTimeInAttack);
-        timeInAttack.setLocation(20, otstup);
-        otstup +=20;
-        timeInAttack.setSize(240, 20);
-        selectGraphics.add(timeInAttack);
+        allMatchPanel.add(timeInAttack);
 
         final JCheckBox goals1per  = new JCheckBox("Голы в первом периоде", settings.showGoals1per);
-        goals1per.setLocation(20, otstup);
-        otstup +=20;
-        goals1per.setSize(200, 20);
-        selectGraphics.add(goals1per);
+        allMatchPanel.add(goals1per);
 
         final JCheckBox goals2per  = new JCheckBox("Голы во втором периоде", settings.showGoals2per);
-        goals2per.setLocation(20, otstup);
-        otstup +=20;
-        goals2per.setSize(200, 20);
-        selectGraphics.add(goals2per);
+        allMatchPanel.add(goals2per);
 
         final JCheckBox goals3per = new JCheckBox("Голы в третьем периоде", settings.showGoals3per);
-        goals3per.setLocation(20, otstup);
-        otstup +=20;
-        goals3per.setSize(200, 20);
-        selectGraphics.add(goals3per);
+        allMatchPanel.add(goals3per);
 
         final JCheckBox goalsShortHanded  = new JCheckBox("Забитые голы в меньшинстве", settings.showGoalsShortHanded);
-        goalsShortHanded.setLocation(20, otstup);
-        otstup +=20;
-        goalsShortHanded.setSize(200, 20);
-        selectGraphics.add(goalsShortHanded);
+        allMatchPanel.add(goalsShortHanded);
 
         final JCheckBox shotsOnTarget  = new JCheckBox("Броски в створ", settings.showShotsOnTarget);
-        shotsOnTarget.setLocation(20, otstup);
-        otstup +=20;
-        shotsOnTarget.setSize(200, 20);
-        selectGraphics.add(shotsOnTarget);
+        allMatchPanel.add(shotsOnTarget);
 
         final JCheckBox shotsOnTarget1per  = new JCheckBox("Броски в створ 1 пер.", settings.showShotsOnTarget1per);
-        shotsOnTarget1per.setLocation(20, otstup);
-        otstup +=20;
-        shotsOnTarget1per.setSize(200, 20);
-        selectGraphics.add(shotsOnTarget1per);
+        allMatchPanel.add(shotsOnTarget1per);
 
         final JCheckBox shotsOnTarget2per  = new JCheckBox("Броски в створ 2 пер.", settings.showShotsOnTarget2per);
-        shotsOnTarget2per.setLocation(20, otstup);
-        otstup +=20;
-        shotsOnTarget2per.setSize(200, 20);
-        selectGraphics.add(shotsOnTarget2per);
+        allMatchPanel.add(shotsOnTarget2per);
 
         final JCheckBox shotsOnTarget3per  = new JCheckBox("Броски в створ 3 пер.", settings.showShotsOnTarget3per);
-        shotsOnTarget3per.setLocation(20, otstup);
-        otstup +=20;
-        shotsOnTarget3per.setSize(200, 20);
-        selectGraphics.add(shotsOnTarget3per);
+        allMatchPanel.add(shotsOnTarget3per);
 
         final JCheckBox missedShots  = new JCheckBox("Броски мимо", settings.showMissedShots);
-        missedShots.setLocation(20, otstup);
-        otstup +=20;
-        missedShots.setSize(200, 20);
-        selectGraphics.add(missedShots);
+        allMatchPanel.add(missedShots);
 
         final JCheckBox blockedShots  = new JCheckBox("Заблокированные броски", settings.showBlockedShots);
-        blockedShots.setLocation(20, otstup);
-        otstup +=20;
-        blockedShots.setSize(200, 20);
-        selectGraphics.add(blockedShots);
+        allMatchPanel.add(blockedShots);
 
         final JCheckBox faceoffs  = new JCheckBox("Вбрасывания", settings.showFaceoffs);
-        faceoffs.setLocation(20, otstup);
-        otstup +=20;
-        faceoffs.setSize(200, 20);
-        selectGraphics.add(faceoffs);
+        allMatchPanel.add(faceoffs);
 
         final JCheckBox hits  = new JCheckBox("Силовые приемы", settings.showHits);
-        hits.setLocation(20, otstup);
-        otstup +=20;
-        hits.setSize(200, 20);
-        selectGraphics.add(hits);
+        allMatchPanel.add(hits);
 
         final JCheckBox penMinutes  = new JCheckBox("Минуты штрафа", settings.showPenMinutes);
-        penMinutes.setLocation(20, otstup);
-        otstup +=20;
-        penMinutes.setSize(200, 20);
-        selectGraphics.add(penMinutes);
+        allMatchPanel.add(penMinutes);
 
         final JCheckBox numberOf2MinutesPen  = new JCheckBox("Кол-во двухминутных удалений", settings.showNumberOf2MinutesPen);
-        numberOf2MinutesPen.setLocation(20, otstup);
-        otstup +=20;
-        numberOf2MinutesPen.setSize(240, 20);
-        selectGraphics.add(numberOf2MinutesPen);
+        allMatchPanel.add(numberOf2MinutesPen);
 
-        otstup +=20;
         final JCheckBox showTotal  = new JCheckBox("Графики тоталов", settings.showTotal);
-        showTotal.setLocation(20, otstup);
-        otstup +=20;
-        showTotal.setSize(200, 20);
-        selectGraphics.add(showTotal);
+        allMatchPanel.add(showTotal);
 
         final JCheckBox showSoTOpponents  = new JCheckBox("Таблица по броскам соперников", settings.showSoTOpponents);
-        showSoTOpponents.setLocation(20, otstup);
-        otstup +=20;
-        showSoTOpponents.setSize(240, 20);
-        selectGraphics.add(showSoTOpponents);
+        allMatchPanel.add(showSoTOpponents);
 
         final JCheckBox showPenOpponents  = new JCheckBox("Таблица по штрафам соперников", settings.showPenOpponents);
-        showPenOpponents.setLocation(20, otstup);
-        otstup +=30;
-        showPenOpponents.setSize(240, 20);
-        selectGraphics.add(showPenOpponents);
+        allMatchPanel.add(showPenOpponents);
 
         /*final JCheckBox dispMinMax  = new JCheckBox("Показывать дисперсии/MAX/MIN бросков и штрафов", settings.dispMinMax);
         dispMinMax.setLocation(20, otstup);
@@ -192,11 +120,9 @@ public class PanelSettings extends JPanel{
         selectGraphics.add(dispMinMax);*/
 
         final JCheckBox useColors  = new JCheckBox("Цветовое оформление таблиц", settings.useColors);
-        useColors.setLocation(20, otstup);
-        otstup +=50;
-        useColors.setSize(240, 20);
-        selectGraphics.add(useColors);
+        allMatchPanel.add(useColors);
 
+        selectGraphics.add(allMatchPanel, BorderLayout.WEST);
         secondPanel.add(selectGraphics);
         //this.add(selectGraphics);
 
@@ -339,7 +265,6 @@ public class PanelSettings extends JPanel{
         panelBubblesChartSettings.add(bubbleChartsAll);
         otherSettings.add(panelBubblesChartSettings);
 
-
         secondPanel.add(otherSettings, BorderLayout.EAST);
 
         JButton buttonApply = new JButton("Применить");
@@ -348,26 +273,13 @@ public class PanelSettings extends JPanel{
         buttonApply.setSize(240, 40);
         mainPanel.add(buttonApply, BorderLayout.SOUTH);
 
-        this.add(mainPanel);
-
-
-        Font fontForButton = new Font("", 0, 18);
-        JPanel panelGetAllDB = new JPanel(new BorderLayout());
-        panelGetAllDB.setBorder(BorderFactory.createTitledBorder("Принудительная синхронизация базы"));
-        panelGetAllDB.setSize(300, 200);
-        panelGetAllDB.setLocation(300, 5);
-        String text = "<html>   Ее можно провести, чтобы база <br>" +
-                "синхронизировалась целиком.<br>" +
-                "Процесс может занять пару минут.<br>" +
-                "По окончании синхронизации текст кнопки изменится.</html>";
-        JLabel label = new JLabel(text);
-        label.setFont(font);
-        panelGetAllDB.add(label);
-
-        final JButton buttonGetDB = new JButton("Синхронизировать!");
-        buttonGetDB.setFont(fontForButton);
-        panelGetAllDB.add(buttonGetDB, BorderLayout.SOUTH);
-        //this.add(panelGetAllDB);
+        sp = new JScrollPane(mainPanel);
+        sp.setVerticalScrollBar( new JScrollBar() {
+            public int getUnitIncrement( int direction ) {
+                return 50;
+            }
+        } );
+        this.add(sp, BorderLayout.WEST);
 
         leftToRight.addActionListener(new ActionListener() {
             @Override
@@ -457,78 +369,20 @@ public class PanelSettings extends JPanel{
             }
         });
 
-                buttonGetDB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int numberOfAccount = Settings.getNumberOfAccount();
-                try {
-                    FTPLoader.downloadFile(Settings.getLogin(numberOfAccount), Settings.getPassword(numberOfAccount),
-                            "/databaseCopies/databaseHBH.zip", Settings.TMP_DIR + "database.zip");
-                    LogWriter.writeLog("Successful decompressing of database");
-                    String user = "";
-                    try {
-                        user = Settings.getUserBySerialNumber(Settings.getSerialNumber());
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                    FTPLoader.downloadFile(Settings.getLogin(numberOfAccount), Settings.getPassword(numberOfAccount), "/data/visit_log_HBH.txt", Settings.TMP_DIR + "/visit_log_HBH.txt");
-                    File file = new File(Settings.TMP_DIR + "/visit_log_HBH.txt");
-                    FileWriter fr = null;
-                    BufferedWriter br = null;
-                    try {
-                        //для обновления файла нужно инициализировать FileWriter с помощью этого конструктора
-                        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
+        JPanel panelReloadDatabase = new JPanel(new VerticalLayout());
+        panelReloadDatabase.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                        String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
-                        String month = String.valueOf(c.get(Calendar.MONTH)+1);
-                        String year = String.valueOf(c.get(Calendar.YEAR));
-                        String hour = String.valueOf(c.get(11));
-                        String minute = String.valueOf(c.get(12));
-                        String second = String.valueOf(c.get(13));
+        JButton buttonReloadDatabase = new JButton("Перезагрузка БД");
+        buttonReloadDatabase.setFont(font);
+        buttonReloadDatabase.setPreferredSize(new Dimension(200, 30));
+        panelReloadDatabase.add(buttonReloadDatabase);
 
-                        if (day.length()==1){
-                            day = "0" + day;
-                        }
-                        if (month.length()==1){
-                            month = "0" + month;
-                        }
-                        if (hour.length()==1){
-                            hour = "0" + hour;
-                        }
-                        if (minute.length()==1){
-                            minute = "0" + minute;
-                        }
-                        if (second.length()==1){
-                            second = "0" + second;
-                        }
+        this.add(panelReloadDatabase, BorderLayout.EAST);
 
-                        fr = new FileWriter(file,true);
-                        br = new BufferedWriter(fr);
-                        br.newLine();
-                        //теперь мы можем использовать метод write или метод append
-                        try {
-                            br.write("[" + day + "." + month + "." + year + "   " + hour + ":" + minute + ":" + second + "]   "  + "User " + user + " downloaded full database.");
-                        } catch (Exception e2) {
-                            e2.printStackTrace();
-                        }
-
-                    } catch (IOException e3) {
-                        e3.printStackTrace();
-                    } finally{
-                        try {
-                            br.close();
-                            fr.close();
-                            FTPLoader.uploadFile(Settings.getLogin(numberOfAccount), Settings.getPassword(numberOfAccount), "/data/visit_log_HBH.txt", Settings.TMP_DIR + "/visit_log_HBH.txt");
-                        } catch (IOException e4) {
-                            e4.printStackTrace();
-                        }
-                    }
-
-                    buttonGetDB.setText("База синхронизирована!");
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
-                }
-            }
+        buttonReloadDatabase.addActionListener(e -> {
+            Settings.setLastUpdate("323_14.02.2020.txt");
+            buttonReloadDatabase.setText("Перезапустите программу!");
+            buttonReloadDatabase.setEnabled(false);
         });
     }
 }
