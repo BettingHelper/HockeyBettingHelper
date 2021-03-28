@@ -104,8 +104,12 @@ public class PanelSettings extends JPanel{
         final JCheckBox numberOf2MinutesPen  = new JCheckBox("Кол-во двухминутных удалений", settings.showNumberOf2MinutesPen);
         allMatchPanel.add(numberOf2MinutesPen);
 
+        allMatchPanel.add(new JLabel(" "));
+
         final JCheckBox showTotal  = new JCheckBox("Графики тоталов", settings.showTotal);
         allMatchPanel.add(showTotal);
+
+        allMatchPanel.add(new JLabel(" "));
 
         final JCheckBox showSoTOpponents  = new JCheckBox("Таблица по броскам соперников", settings.showSoTOpponents);
         allMatchPanel.add(showSoTOpponents);
@@ -118,6 +122,8 @@ public class PanelSettings extends JPanel{
         otstup +=30;
         dispMinMax.setSize(240, 20);
         selectGraphics.add(dispMinMax);*/
+
+        allMatchPanel.add(new JLabel(" "));
 
         final JCheckBox useColors  = new JCheckBox("Цветовое оформление таблиц", settings.useColors);
         allMatchPanel.add(useColors);
