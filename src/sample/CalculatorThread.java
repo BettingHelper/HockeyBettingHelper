@@ -86,7 +86,7 @@ public class CalculatorThread extends Thread{
                 "Броски в створ", "Броски в створ 1 пер.", "Броски в створ 2 пер.", "Броски в створ 3 пер.", "Броски мимо",
                 "Заблокированные броски", "Вбрасывания", "Силовые приемы", "Минуты штрафа", "Кол-во двухминутных удалений"};
 
-        int numberOfStages = 14;
+        int numberOfStages = 15;
         int currentStage = 0;
 
         if (!pCalc.lastCalculatedLeague.equals(leagueName) || !pCalc.lastCalculatedSeason.equals(season)
@@ -154,7 +154,8 @@ public class CalculatorThread extends Thread{
                     pCalc.dataArrayTotal_ConfAll_HT, pCalc.arrayOpponents_ConfAll_HT, tournamentTable);
             pCalc.arrayLeaguesAll = new ArrayList<>();
             for (int i=0; i<pCalc.selectorConfAll_HT.listOfMatches.size(); i++){
-                League localLeague = League.getLeagueFromFile(leagueName, season);
+                String localSeason = pCalc.selectorConfAll_HT.seasonsList.get(i);
+                League localLeague = League.getLeagueFromFile(leagueName, localSeason);
                 pCalc.arrayLeaguesAll.add(localLeague);
             }
             currentStage++;
@@ -170,7 +171,8 @@ public class CalculatorThread extends Thread{
                     pCalc.dataArrayTotal_ConfHomeField_HT, pCalc.arrayOpponents_ConfHomeField_HT, tournamentTable);
             ArrayList<League> arrayLeaguesHomeField_HT = new ArrayList<>();
             for (int i=0; i<pCalc.selectorConfHomeField_HT.listOfMatches.size(); i++){
-                League localLeague = League.getLeagueFromFile(leagueName, season);
+                String localSeason = pCalc.selectorConfAll_HT.seasonsList.get(i);
+                League localLeague = League.getLeagueFromFile(leagueName, localSeason);
                 arrayLeaguesHomeField_HT.add(localLeague);
             }
             currentStage++;
@@ -216,7 +218,7 @@ public class CalculatorThread extends Thread{
         jpb.setValue((int) (currentStage / (double) numberOfStages * 100));
 
         ArrayList<Double> calculatedParams = new ArrayList();
-        data = new String[4][3];
+        data = new String[5][3];
 
         // "Броски в створ", "Блокированные броски", "Вбрасывания", "Силовые приемы"
         // Броски за матч. 1 - getArraysWithStats; 2 - в Админке
@@ -255,8 +257,17 @@ public class CalculatorThread extends Thread{
         currentStage++;
         jpb.setValue((int) (currentStage / (double) numberOfStages * 100));
 
+        // Двухминутные удаления за матч
+        calculatedParams = calcParams(19, 17);
+        data[4][0] = calculatedParams.get(0) + " : " + calculatedParams.get(1);
+        data[4][1] = String.valueOf(MyMath.round(calculatedParams.get(0) + calculatedParams.get(1),2));
+        data[4][2] = String.valueOf(MyMath.round(calculatedParams.get(0) - calculatedParams.get(1),2));
+
+        currentStage++;
+        jpb.setValue((int) (currentStage / (double) numberOfStages * 100));
+
         pCalc.dataPanel.removeAll();
-        pCalc.dataPanel.add(getResultPanel2(), BorderLayout.CENTER);
+        pCalc.dataPanel.add(getResultPanel(), BorderLayout.CENTER);
         pCalc.dataPanel.revalidate();
         pCalc.revalidate();
 
@@ -395,7 +406,7 @@ public class CalculatorThread extends Thread{
         sumAT_Opp = sumAT_Opp / (double) pCalc.selectorConfAll_AT.listOfMatches.size();
 
         homeCornersSelf = pCalc.currentLeague.getParameterValue(Team.getShortName(awayTeam), "Общее", indexInTable, 1) + sumHT;
-        awayCornersOpp = pCalc.currentLeague.getParameterValue(Team.getShortName(homeTeam), "Общее", indexInTable, 0) + sumAT_Opp;
+        awayCornersOpp  = pCalc.currentLeague.getParameterValue(Team.getShortName(homeTeam), "Общее", indexInTable, 0) + sumAT_Opp;
         awayCornersSelf = pCalc.currentLeague.getParameterValue(Team.getShortName(homeTeam), "Общее", indexInTable, 1) + sumAT;
         homeCornersSOpp = pCalc.currentLeague.getParameterValue(Team.getShortName(awayTeam), "Общее", indexInTable, 0) + sumHT_Opp;
 
@@ -475,7 +486,7 @@ public class CalculatorThread extends Thread{
         return result;
     }
 
-    public JPanel getResultPanel2(){
+    public JPanel getResultPanel(){
         JPanel result = new JPanel(new VerticalLayout());
 
         JPanel headerPanel = new JPanel(new BorderLayout());
@@ -515,7 +526,7 @@ public class CalculatorThread extends Thread{
 
         String[] colHeads = {"Показатель", "Расч. счет матча", "Расч. тотал матча", "Расч. фора хозяев"
         };
-        String[] params = {"Броски в створ", "Блокированные броски", "Вбрасывания", "Силовые приемы"};
+        String[] params = {"Броски в створ", "Блокированные броски", "Вбрасывания", "Силовые приемы", "Двухминутные удаления"};
         Object[][] dataForTable = new Object[params.length][colHeads.length];
 
         for (int i=0; i<data.length; i++){
@@ -547,136 +558,6 @@ public class CalculatorThread extends Thread{
         tablePanel.add(tableInfo.getTableHeader(), BorderLayout.NORTH);
 
         result.add(tablePanel);
-
-
-
-
-
-
-
-        /*
-
-        JLabel labelPredictCornersHeader = new JLabel("Расчетные значения угловых:");
-        labelPredictCornersHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPredictCornersHeader.setFont(font);
-        textPanel.add(labelPredictCornersHeader);
-
-        JLabel labelPredictCorners = new JLabel(resultHT + " : " + resultAT);
-        labelPredictCorners.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPredictCorners.setFont(font);
-        textPanel.add(labelPredictCorners);
-
-        JLabel labelTotalHeader = new JLabel("Расчетное значение тотала:");
-        labelTotalHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        labelTotalHeader.setFont(font);
-        textPanel.add(labelTotalHeader);
-
-        JLabel labelPredictTotal = new JLabel(String.valueOf(MyMath.round(resultHT + resultAT, 2)));
-        labelPredictTotal.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPredictTotal.setFont(font);
-        textPanel.add(labelPredictTotal);
-
-        JLabel labelTotalHandicapHeader = new JLabel("Расчетное значение форы:");
-        labelTotalHandicapHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        labelTotalHandicapHeader.setFont(font);
-        textPanel.add(labelTotalHandicapHeader);
-
-        JLabel labelPredictHandicap = null;
-        if (resultHT > resultAT){
-            labelPredictHandicap = new JLabel("Фора +" + MyMath.round(resultHT-resultAT , 2) + " в пользу " + homeTeam);
-        }
-        if (resultHT < resultAT){
-            labelPredictHandicap = new JLabel("Фора +" + MyMath.round(resultAT-resultHT , 2) + " в пользу " + awayTeam);
-        }
-        if (resultHT == resultAT){
-            labelPredictHandicap = new JLabel("Фора = 0");
-        }
-        labelPredictHandicap.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPredictHandicap.setFont(font);
-        textPanel.add(labelPredictHandicap);
-
-        result.add(textPanel, BorderLayout.CENTER);
-
-        */
-
-        return result;
-    }
-
-    public JPanel getResultPanel(double resultHT, double resultAT){
-        JPanel result = new JPanel(new BorderLayout());
-
-        Font font = new Font("", Font.BOLD, 30);
-        JPanel textPanel = new JPanel(new GridLayout(0, 1, 10, 10));
-
-        JLabel labelTop = new JLabel(homeTeam + " : " + awayTeam);
-        labelTop.setFont(font);
-        labelTop.setHorizontalAlignment(SwingConstants.CENTER);
-        textPanel.add(labelTop);
-
-        JLabel labelPredictCornersHeader = new JLabel("Расчетные значения угловых:");
-        labelPredictCornersHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPredictCornersHeader.setFont(font);
-        textPanel.add(labelPredictCornersHeader);
-
-        JLabel labelPredictCorners = new JLabel(resultHT + " : " + resultAT);
-        labelPredictCorners.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPredictCorners.setFont(font);
-        textPanel.add(labelPredictCorners);
-
-        JLabel labelTotalHeader = new JLabel("Расчетное значение тотала:");
-        labelTotalHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        labelTotalHeader.setFont(font);
-        textPanel.add(labelTotalHeader);
-
-        JLabel labelPredictTotal = new JLabel(String.valueOf(MyMath.round(resultHT + resultAT, 2)));
-        labelPredictTotal.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPredictTotal.setFont(font);
-        textPanel.add(labelPredictTotal);
-
-        JLabel labelTotalHandicapHeader = new JLabel("Расчетное значение форы:");
-        labelTotalHandicapHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        labelTotalHandicapHeader.setFont(font);
-        textPanel.add(labelTotalHandicapHeader);
-
-        JLabel labelPredictHandicap = null;
-        if (resultHT > resultAT){
-            labelPredictHandicap = new JLabel("Фора +" + MyMath.round(resultHT-resultAT , 2) + " в пользу " + homeTeam);
-        }
-        if (resultHT < resultAT){
-            labelPredictHandicap = new JLabel("Фора +" + MyMath.round(resultAT-resultHT , 2) + " в пользу " + awayTeam);
-        }
-        if (resultHT == resultAT){
-            labelPredictHandicap = new JLabel("Фора = 0");
-        }
-        labelPredictHandicap.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPredictHandicap.setFont(font);
-        textPanel.add(labelPredictHandicap);
-
-        result.add(textPanel, BorderLayout.CENTER);
-
-        File fileHT = new File("images/" + homeTeam + ".png");
-        BufferedImage bimg = null;
-        try {
-            bimg = ImageIO.read(fileHT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Image scaled = bimg.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-        JLabel teamImage = new JLabel(new ImageIcon(scaled));
-        teamImage.setBorder(new EmptyBorder(5,0,0,0));
-        result.add(teamImage, BorderLayout.WEST);
-
-        File fileAT = new File("images/" + awayTeam + ".png");
-        bimg = null;
-        try {
-            bimg = ImageIO.read(fileAT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        scaled = bimg.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-        teamImage = new JLabel(new ImageIcon(scaled));
-        teamImage.setBorder(new EmptyBorder(5,0,0,0));
-        result.add(teamImage, BorderLayout.EAST);
 
         return result;
     }

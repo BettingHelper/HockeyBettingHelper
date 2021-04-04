@@ -18,6 +18,7 @@ public class Selector {
             "Кол-во двухминутных удалений 1 пер", "Кол-во двухминутных удалений 2 пер", "Кол-во двухминутных удалений 3 пер",
 
     };
+    public ArrayList<String> seasonsList = new ArrayList<>();
 
     public Selector(){
         pList = new ArrayList<>();
@@ -598,10 +599,12 @@ public class Selector {
                         if (ht.matchList.get(k).contains(matchTitle1)){
                             listOfMatches.add(Match.getMatchFromFileByName(path + ht.matchList.get(k) + ".xml"));
                             listForConfrontation.add(listOfSeasons.get(i));
+                            seasonsList.add(listOfSeasons.get(i));
                         }
                         if (ht.matchList.get(k).contains(matchTitle2) && allOrHomeAway.contains("Все матчи")){
                             listOfMatches.add(Match.getMatchFromFileByName(path + ht.matchList.get(k) + ".xml"));
                             listForConfrontation.add(listOfSeasons.get(i));
+                            seasonsList.add(listOfSeasons.get(i));
                         }
                     }
                 }

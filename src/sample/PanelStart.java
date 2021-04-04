@@ -16,7 +16,7 @@ public class PanelStart extends JPanel {
     Settings settings;
     JPanel container;
     final String path = "database/";
-    String currentVersion = "5.0";
+    String currentVersion = "5.0.1";
     String newestVersion;
 
     public PanelStart() {
