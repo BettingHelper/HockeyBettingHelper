@@ -1286,7 +1286,7 @@ public class Settings {
                         FTPLoader.downloadFile(Settings.getLogin(0), Settings.getPassword(0), "/data/hockey/settings/graphicSettings.xml", "settings/graphicSettings.xml");
                         FTPLoader.downloadFile(Settings.getLogin(0), Settings.getPassword(0), "/data/hockey/settings/lastUpdate.txt", "settings/lastUpdate.txt");
                         FTPLoader.downloadFile(Settings.getLogin(0), Settings.getPassword(0), "/data/hockey/settings/allLeagues.txt", "settings/allLeagues.txt");
-
+                        System.out.println("Загружены настройки с хостинга");
                     }
 
                 } catch (Exception e){
